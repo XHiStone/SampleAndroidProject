@@ -1,15 +1,21 @@
 package com.app.sampleandroidproject.ui;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.app.sampleandroidproject.R;
+import com.app.sampleandroidproject.app.ActivitiesManager;
+import com.app.sampleandroidproject.app.AppManagers;
+import com.app.sampleandroidproject.ui.base.BaseActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int getContentResource() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void startWork(Bundle savedInstanceState) {
+        AppManagers.getToastor().showSingletonToast(ActivitiesManager.getInstance().getStack().size()+"--");
     }
 }

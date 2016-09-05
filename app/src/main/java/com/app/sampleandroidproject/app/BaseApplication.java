@@ -21,10 +21,16 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Fresco.initialize(this);
         application = BaseApplication.this;
+        AppManagers.getAppManagers(this);
+        Fresco.initialize(this);
         BusProvider.register(this);
     }
+
+    public static BaseApplication getInstance() {
+        return application;
+    }
+
 
     @Subscribe
     public void callback(String error) {
