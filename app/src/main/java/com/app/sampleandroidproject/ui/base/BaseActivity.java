@@ -6,8 +6,14 @@ import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewStub;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
+import com.app.sampleandroidproject.R;
 import com.app.sampleandroidproject.app.ActivitiesManager;
 
 import java.util.List;
@@ -20,8 +26,10 @@ import java.util.List;
  * @Time: 2016/9/2 9:48
  * @Description:
  */
-
 public abstract class BaseActivity extends AppCompatActivity {
+
+    private TextView tittle_text;
+
     protected FragmentManager fragmentManager;
 
     protected abstract int getContentResource();
@@ -33,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         ActivitiesManager.getInstance().addActivity(this);
         super.onCreate(savedInstanceState);
-        setContentView(getContentResource());
+        setContentView(getContentView());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus();
         }
@@ -42,7 +50,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(fragmentManager == null){
+        if (fragmentManager == null) {
             ActivitiesManager.getInstance().finishActivity();
         } else {
             if (fragmentManager.getBackStackEntryCount() == 0) {
@@ -55,55 +63,54 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onAttachFragment (Fragment fragment) {
+    public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
     }
 
     @Override
-    public void onContentChanged () {
+    public void onContentChanged() {
         super.onContentChanged();
     }
 
     @Override
-    public void onPostCreate (Bundle savedInstanceState, PersistableBundle persistentState) {
+    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onPostCreate(savedInstanceState, persistentState);
     }
 
     @Override
-    protected void onPostCreate (Bundle savedInstanceState) {
+    protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
     }
 
     @Override
-    protected void onStart () {
+    protected void onStart() {
         super.onStart();
     }
 
     @Override
-    protected void onResume () {
+    protected void onResume() {
         super.onResume();
     }
 
     @Override
-    protected void onPostResume () {
+    protected void onPostResume() {
         super.onPostResume();
     }
 
     @Override
-    protected void onPause () {
+    protected void onPause() {
         super.onPause();
     }
 
     @Override
-    protected void onSaveInstanceState (Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
 
     @Override
-    protected void onStop () {
+    protected void onStop() {
         super.onStop();
     }
-
 
     @Override
     protected void onDestroy() {
@@ -112,6 +119,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             for (Fragment fragment : fragments) fragment = null;
         }
         super.onDestroy();
+    }
+
+    private View getContentView() {
+        View root = LayoutInflater.from(this).inflate(R.layout.layout_base, null);
+        FrameLayout content = (FrameLayout) root.findViewById(R.id.content_frame);
+        content.addView(LayoutInflater.from(this).inflate(getContentResource(), null));
+        return root;
     }
 
     /**
@@ -123,6 +137,17 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void setTranslucentStatus() {
         WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
         localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+    }
+
+    private void headerInit() {
+        ViewStub stub = ((ViewStub) findViewById(R.id.vs_title));
+        stub.inflate();
+        tittle_text = (TextView) findViewById(R.id.tittle_text);
+    }
+
+    public void setTittleText(String title) {
+        headerInit();
+        tittle_text.setText(title);
     }
 
 }

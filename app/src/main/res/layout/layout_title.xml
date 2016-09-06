@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tittle_bar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/title_bar_dimmens">
+
+        <ImageView
+            android:id="@+id/tittle_logo_img"
+            android:layout_width="60dp"
+            android:layout_height="46dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="15px" />
+
+        <TextView
+            android:id="@+id/tittle_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="消息"
+            android:textColor="#f0f0f0"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/tittle_img_drawer"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10px" />
+
+        <ImageView
+            android:id="@+id/tittle_img_find"
+            android:layout_width="60dp"
+            android:layout_height="46dp"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10px"
+            android:layout_toLeftOf="@id/tittle_img_drawer" />
+
+        <TextView
+            android:id="@+id/tittle_login_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:padding="15px"
+            android:text="登录"
+            android:textColor="#f0f0f0"
+            android:textSize="30px"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tittle_huanxin_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@id/tittle_logo_img"
+            android:gravity="center"
+            android:padding="15px"
+            android:text="发布话题"
+            android:textColor="#f0f0f0"
+            android:textSize="30px"
+            android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>
