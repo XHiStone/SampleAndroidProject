@@ -25,12 +25,9 @@ public class AppManagers {
     private static CacheManager cacheManager;
     private static TokenUtil tokenUtil;
     private static Toastor toastor;
+    private static ActivitiesManager activities;
 
     public static AppManagers getAppManagers(Context context) {
-
-        if (httpManager == null) {
-            httpManager = HttpManager.getInstance();
-        }
 
         if (cacheManager == null) {
             cacheManager = CacheManager.get(context.getExternalCacheDir().getAbsolutePath() +
@@ -49,6 +46,9 @@ public class AppManagers {
     }
 
     public static HttpManager getHttpManager() {
+        if (httpManager == null) {
+            httpManager = HttpManager.getInstance();
+        }
         return httpManager;
     }
 
@@ -62,5 +62,12 @@ public class AppManagers {
 
     public static Toastor getToastor() {
         return toastor;
+    }
+
+    public static ActivitiesManager getActivitiesManager() {
+        if (activities == null) {
+            activities = ActivitiesManager.getInstance();
+        }
+        return activities;
     }
 }

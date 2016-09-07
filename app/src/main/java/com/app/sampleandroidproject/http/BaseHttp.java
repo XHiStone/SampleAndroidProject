@@ -48,13 +48,12 @@ import rx.schedulers.Schedulers;
  */
 
 public class BaseHttp {
-    protected static Map<String, String> keys = new HashMap<>();
+    protected final static Map<String, String> keys = new HashMap<>();
     protected final String TOKEN = "token";
-    protected Context context;
     protected HttpApi api;
     private Cache cache;
 
-    private OkHttpClient _createClient(Map<String, String> headers, boolean isCach) {
+    private OkHttpClient _createClient(Context mContext, Map<String, String> headers, boolean isCach) {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -62,9 +61,9 @@ public class BaseHttp {
         builder.readTimeout(Constants.HTTP_CONNECTTIME, TimeUnit.SECONDS);
         builder.writeTimeout(Constants.HTTP_CONNECTTIME, TimeUnit.SECONDS);
         if (isCach) {
-            builder.addInterceptor(new HttpCachInterceptor(context));
+            builder.addInterceptor(new HttpCachInterceptor(mContext));
             if (cache == null) {
-                File cacheFile = new File(context.getCacheDir(), Constants.HTTP_CACHFILENAME);
+                File cacheFile = new File(mContext.getCacheDir(), Constants.HTTP_CACHFILENAME);
                 cache = new Cache(cacheFile, Constants.HTTP_CACHSIZE);
             }
             builder.cache(cache);
@@ -100,7 +99,7 @@ public class BaseHttp {
     }
 
 
-    protected <T> T createService(Class<T> clazz, Map<String, String> headers, String baseURL, boolean isCach) {
+    protected <T> T createService(Context mContext, Class<T> clazz, Map<String, String> headers, String baseURL, boolean isCach) {
 
         if (TextUtils.isEmpty(baseURL)) {
             throw new IllegalArgumentException("HttpManager-->createService >>> baseURL can not be empty");
@@ -119,7 +118,7 @@ public class BaseHttp {
                 .addConverterFactory(FastJsonConverterFactory.create())
                 .baseUrl(baseURL);
 
-        builder.client(_createClient(headers, isCach));
+        builder.client(_createClient(mContext, headers, isCach));
 
         return builder.build().create(clazz);
     }
@@ -130,27 +129,27 @@ public class BaseHttp {
             @Override
             public void onStart() {
                 super.onStart();
-                httpRequest.onStart();
+                httpRequest.onHttpStart();
             }
 
             @Override
             public void onCompleted() {
                 unsubscribe();
-                httpRequest.onFinish();
+                httpRequest.onHttpFinish();
             }
 
             @Override
             public void onError(Throwable e) {
                 unsubscribe();
                 ThrowErrorInfo(e);
-                httpRequest.onError();
+                httpRequest.onHttpError();
                 Log.e("tag", "------>onError=" + e.getMessage());
 
             }
 
             @Override
             public void onNext(T t) {
-                httpRequest.onSuccess(t);
+                httpRequest.onHttpSuccess(t);
             }
         });
     }
@@ -215,8 +214,7 @@ public class BaseHttp {
      * @params [context, isCach, firstCach]
      */
     protected void httpRequest(Context context, boolean isCach) {
-        this.context = context;
-        api = createService(HttpApi.class, null, Constants.BASEURL, isCach);
+        api = createService(context, HttpApi.class, null, Constants.BASEURL, isCach);
         if (!TextUtils.isEmpty(AppManagers.getTokenUtil().getToken()) && keys.size() == 0)
             keys.put(TOKEN, AppManagers.getTokenUtil().getToken());
     }

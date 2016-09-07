@@ -2,25 +2,26 @@ package com.app.sampleandroidproject.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.app.sampleandroidproject.R;
 import com.app.sampleandroidproject.ui.base.BaseActivity;
-
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ItemClick;
-import org.androidannotations.annotations.ViewById;
+import com.jakewharton.rxbinding.widget.RxAdapterView;
 
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
-@EActivity
+import butterknife.BindView;
+import rx.functions.Action1;
+
 public class MainActivity extends BaseActivity {
 
-    @ViewById
+    @BindView(R.id.listView)
     ListView listView;
 
-    private Intent intent;
     private String[] names;
 
     @Override
@@ -34,26 +35,47 @@ public class MainActivity extends BaseActivity {
         initData();
     }
 
+    @Override
+    protected void stopWork() {
+
+    }
+
     private void initData() {
         names = new String[]{
-                "MVP"
+                "DaggerActivity", "MVPActivity"
         };
         ArrayAdapter adapter = new ArrayAdapter(this,
                 android.R.layout.simple_expandable_list_item_1, Arrays.asList(names));
         listView.setAdapter(adapter);
+        listView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        RxAdapterView.itemClicks(listView).throttleFirst(500, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        switch (integer) {
+                            case 0:
+                                startActivity(new Intent(MainActivity.this, DaggerActivity.class));
+                                break;
+                            case 1:
+                                startActivity(new Intent(MainActivity.this, MVPActivity.class));
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
     }
 
-    @ItemClick({R.id.listView})
-    public void ItemClick(int position) {
-        switch (position) {
-            case 0:
-                intent = new Intent(MainActivity.this, MVPActivity.class);
-                startActivity(intent);
-                break;
-
-            default:
-                break;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            this.startActivity(intent);
+            return true;
         }
+        return super.onKeyDown(keyCode, event);
     }
 
 

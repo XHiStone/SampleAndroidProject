@@ -20,8 +20,6 @@ final class HttpInterceptor implements Interceptor {
 
     private Map<String, String> _headers;
 
-    public HttpInterceptor() { }
-
     public HttpInterceptor(Map<String, String> headers) {
         this._headers = headers;
     }

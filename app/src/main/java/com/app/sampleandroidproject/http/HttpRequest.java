@@ -11,11 +11,11 @@ package com.app.sampleandroidproject.http;
 
 
 public interface HttpRequest<T> {
-    void onStart();
+    void onHttpStart();
 
-    void onSuccess(T t);
+    void onHttpSuccess(T t);
 
-    void onFinish();
+    void onHttpFinish();
 
-    void onError();
+    void onHttpError();
 }

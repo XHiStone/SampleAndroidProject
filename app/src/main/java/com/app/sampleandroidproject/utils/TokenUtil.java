@@ -54,25 +54,25 @@ public class TokenUtil {
             AppManagers.getHttpManager()
                     .getToken(context, true, APP_ID, deviceId, new HttpRequest<SysUserBean>() {
                                 @Override
-                                public void onStart() {
+                                public void onHttpStart() {
 //                                    Log.i("tag","----onStart");
                                 }
 
                                 @Override
-                                public void onSuccess(SysUserBean sysUserBean) {
+                                public void onHttpSuccess(SysUserBean sysUserBean) {
                                     mToken = sysUserBean.content.get(0) + "";
 //                                    Log.i("tag","----onSuccess");
                                 }
 
                                 @Override
-                                public void onFinish() {
+                                public void onHttpFinish() {
                                     if (!TextUtils.isEmpty(mToken))
                                         AppManagers.getCacheManager().put(Constants.KEY_TOKEN, mToken);
 //                                    Log.i("tag","----onFinish");
                                 }
 
                                 @Override
-                                public void onError() {
+                                public void onHttpError() {
 
                                 }
                             }

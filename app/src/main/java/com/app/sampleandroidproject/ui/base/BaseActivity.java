@@ -1,5 +1,6 @@
 package com.app.sampleandroidproject.ui.base;
 
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -7,16 +8,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewStub;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.app.sampleandroidproject.R;
-import com.app.sampleandroidproject.app.ActivitiesManager;
+import com.app.sampleandroidproject.app.AppManagers;
+import com.app.sampleandroidproject.http.HttpManager;
 
 import java.util.List;
+
+import butterknife.ButterKnife;
 
 /**
  * SampleAndroidProject
@@ -29,19 +32,23 @@ import java.util.List;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private TextView tittle_text;
-
-    protected FragmentManager fragmentManager;
+    private HttpManager httpManager;
+    private FragmentManager fragmentManager;
 
     protected abstract int getContentResource();
 
     protected abstract void startWork(Bundle savedInstanceState);
 
+    protected abstract void stopWork();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         fragmentManager = getSupportFragmentManager();
-        ActivitiesManager.getInstance().addActivity(this);
+        AppManagers.getActivitiesManager().addActivity(this);
         super.onCreate(savedInstanceState);
-        setContentView(getContentView());
+        setContentView(R.layout.layout_base);
+        getContentView();
+        ButterKnife.bind(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus();
         }
@@ -51,10 +58,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (fragmentManager == null) {
-            ActivitiesManager.getInstance().finishActivity();
+            AppManagers.getActivitiesManager().finishActivity();
         } else {
             if (fragmentManager.getBackStackEntryCount() == 0) {
-                ActivitiesManager.getInstance().finishActivity();
+                AppManagers.getActivitiesManager().finishActivity();
             } else {
                 fragmentManager.popBackStack();
             }
@@ -118,14 +125,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (fragments != null && fragments.size() != 0) {
             for (Fragment fragment : fragments) fragment = null;
         }
+        AppManagers.getActivitiesManager().removeActivity(this);
+        stopWork();
         super.onDestroy();
     }
 
-    private View getContentView() {
-        View root = LayoutInflater.from(this).inflate(R.layout.layout_base, null);
-        FrameLayout content = (FrameLayout) root.findViewById(R.id.content_frame);
+    private void getContentView() {
+        FrameLayout content = (FrameLayout) findViewById(R.id.content_frame);
         content.addView(LayoutInflater.from(this).inflate(getContentResource(), null));
-        return root;
     }
 
     /**
@@ -148,6 +155,28 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setTittleText(String title) {
         headerInit();
         tittle_text.setText(title);
+    }
+
+    public HttpManager htttpRequest() {
+        if (httpManager == null) {
+            httpManager = AppManagers.getHttpManager();
+        }
+        return httpManager;
+    }
+
+    private ProgressDialog progressDialog;
+    protected void showProgressDialog(String message) {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage(message);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+    }
+
+    protected void dissmissProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 
 }

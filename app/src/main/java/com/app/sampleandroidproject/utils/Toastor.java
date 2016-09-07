@@ -7,7 +7,7 @@ import android.widget.Toast;
  * Created by IntelliJ IDEA in MaitianCommonLibrary
  * cn.maitian.app.library.utils.assist
  *
- * @Author: ChengChen
+ * @Author: xie
  * @Time: 2016/6/6 17:32
  * @Description:
  */

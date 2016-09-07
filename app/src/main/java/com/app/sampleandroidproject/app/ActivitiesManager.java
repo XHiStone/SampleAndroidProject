@@ -16,38 +16,36 @@ import java.util.Stack;
  */
 
 public class ActivitiesManager {
-    /**栈集合是线程安全的*/
+    /**
+     * 栈集合是线程安全的
+     */
     private Stack<Activity> stack;
-    private static ActivitiesManager appManager;
+    private final static ActivitiesManager instance = new ActivitiesManager();
 
-    /** 常规构造方法 */
-    public ActivitiesManager() {
-
-    }
-
-    /** 懒汉单列模式，类的初始化方法 */
     public static ActivitiesManager getInstance() {
-        if (null == appManager) {
-            appManager = new ActivitiesManager();
-        }
-        return appManager;
+        return instance;
     }
 
-    /** 添加Activity入栈 **/
+    /**
+     * 添加Activity入栈
+     **/
     public void addActivity(Activity activity) {
-        if (null == stack) {
+        if (stack == null)
             stack = new Stack<>();
-        }
         stack.add(activity);
     }
 
-    /** 结束最后一个Activity */
+    /**
+     * 结束最后一个Activity
+     */
     public void finishActivity() {
         Activity activity = stack.lastElement();
         finishActivity(activity);
     }
 
-    /** 结束指定Activity */
+    /**
+     * 结束指定Activity
+     */
     public void finishActivity(Activity activity) {
         if (null != activity) {
             stack.remove(activity);
@@ -55,7 +53,15 @@ public class ActivitiesManager {
         activity.finish();
     }
 
-    /** 结束指定类名Activity **/
+    public void removeActivity(Activity activity) {
+        if (stack.contains(activity)) {
+            stack.remove(activity);
+        }
+    }
+
+    /**
+     * 结束指定类名Activity
+     **/
     public void finishActivity(Class<?> cls) {
         for (Activity activity : stack) {
             if (activity.getClass().equals(cls)) {
@@ -64,7 +70,9 @@ public class ActivitiesManager {
         }
     }
 
-    /** 退出所有的Activity */
+    /**
+     * 退出所有的Activity
+     */
     public void finishAllActivity() {
         try {
             for (Activity activity : stack) {
@@ -74,10 +82,14 @@ public class ActivitiesManager {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            stack.clear();
         }
     }
 
-    /** 退出应用程序 */
+    /**
+     * 退出应用程序
+     */
     public void exitApp(Context context) {
         try {
             finishAllActivity();
@@ -91,7 +103,7 @@ public class ActivitiesManager {
         }
     }
 
-    public Stack<Activity> getStack(){
+    public Stack<Activity> getStack() {
         return stack;
     }
 }
