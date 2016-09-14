@@ -2,6 +2,7 @@ package com.app.sampleandroidproject.app;
 
 import android.content.Context;
 
+import com.app.sampleandroidproject.dao.DbManagers;
 import com.app.sampleandroidproject.http.HttpManager;
 import com.app.sampleandroidproject.utils.CacheManager;
 import com.app.sampleandroidproject.utils.Toastor;
@@ -26,6 +27,7 @@ public class AppManagers {
     private static TokenUtil tokenUtil;
     private static Toastor toastor;
     private static ActivitiesManager activities;
+    private static DbManagers dbManagers;
 
     public static AppManagers getAppManagers(Context context) {
 
@@ -42,6 +44,11 @@ public class AppManagers {
         if (toastor == null) {
             toastor = new Toastor(context);
         }
+
+        if (dbManagers == null) {
+            dbManagers = DbManagers.getDbManagers(context);
+        }
+
         return appManagers;
     }
 
@@ -69,5 +76,9 @@ public class AppManagers {
             activities = ActivitiesManager.getInstance();
         }
         return activities;
+    }
+
+    public static DbManagers getDbManagers() {
+        return dbManagers;
     }
 }

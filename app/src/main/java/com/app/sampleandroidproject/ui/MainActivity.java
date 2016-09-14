@@ -8,7 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.app.sampleandroidproject.R;
+import com.app.sampleandroidproject.app.AppManagers;
 import com.app.sampleandroidproject.ui.base.BaseActivity;
+import com.app.sampleandroidproject.ui.rxexample.RxDaoActivity;
 import com.jakewharton.rxbinding.widget.RxAdapterView;
 
 import java.util.Arrays;
@@ -42,12 +44,12 @@ public class MainActivity extends BaseActivity {
 
     private void initData() {
         names = new String[]{
-                "DaggerActivity", "MVPActivity"
+                "DaggerActivity", "MVPActivity", "GreenDaoActivity", "RxDaoActivity"
         };
         ArrayAdapter adapter = new ArrayAdapter(this,
                 android.R.layout.simple_expandable_list_item_1, Arrays.asList(names));
         listView.setAdapter(adapter);
-        listView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        listView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
         RxAdapterView.itemClicks(listView).throttleFirst(500, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<Integer>() {
                     @Override
@@ -58,6 +60,12 @@ public class MainActivity extends BaseActivity {
                                 break;
                             case 1:
                                 startActivity(new Intent(MainActivity.this, MVPActivity.class));
+                                break;
+                            case 2:
+                                startActivity(new Intent(MainActivity.this, GreenDaoActivity.class));
+                                break;
+                            case 3:
+                                startActivity(new Intent(MainActivity.this, RxDaoActivity.class));
                                 break;
                             default:
                                 break;
@@ -78,5 +86,9 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppManagers.getToastor().showSingletonToast("Main");
+    }
 }

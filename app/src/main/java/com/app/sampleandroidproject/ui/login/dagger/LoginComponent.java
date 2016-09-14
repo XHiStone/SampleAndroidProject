@@ -2,6 +2,7 @@ package com.app.sampleandroidproject.ui.login.dagger;
 
 import com.app.sampleandroidproject.beans.request.LoginRequest;
 import com.app.sampleandroidproject.ui.DaggerActivity;
+import com.app.sampleandroidproject.ui.GreenDaoActivity;
 import com.app.sampleandroidproject.ui.MVPActivity;
 
 import dagger.Subcomponent;
@@ -21,4 +22,6 @@ public interface LoginComponent {
     void inject(DaggerActivity activity);
 
     void inject(MVPActivity activity);
+
+    void inject(GreenDaoActivity activity);
 }

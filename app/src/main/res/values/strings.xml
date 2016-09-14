@@ -26,4 +26,9 @@
     <string name="msg_db_save_failure">数据库存储对象失败</string>
     <string name="msg_db_query_failure">数据库查询对象失败</string>
     <!--End-->
+
+
+    <string name="enter_new_note">Enter new note</string>
+    <string name="add">Add</string>
+    <string name="click_to_remove">Click a note to remove it</string>
 </resources>

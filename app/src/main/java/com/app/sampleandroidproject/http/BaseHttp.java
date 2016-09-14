@@ -83,21 +83,21 @@ public class BaseHttp {
     private <T> Subscription httpResult(Observable<ModleBean<T>> observable, final Subscriber<T> subscriber) {
 
         return observable
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
                 .map(new Func1<ModleBean<T>, T>() {
                     @Override
                     public T call(ModleBean<T> modleBean) {
-                        if (!modleBean.success) {
+                        if (!modleBean.success && !TextUtils.isEmpty(modleBean.msg)) {
                             subscriber.onError(new Error(modleBean.msg));
                         }
                         return modleBean.pager;
                     }
-                }).subscribeOn(Schedulers.io())
+                })
+                .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
-
 
     protected <T> T createService(Context mContext, Class<T> clazz, Map<String, String> headers, String baseURL, boolean isCach) {
 

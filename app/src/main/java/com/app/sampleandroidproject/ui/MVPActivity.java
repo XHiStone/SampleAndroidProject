@@ -116,4 +116,10 @@ public class MVPActivity extends BaseActivity implements LoginView {
     public void hideLoading() {
         dissmissProgressDialog();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppManagers.getToastor().showSingletonToast("MVP");
+    }
 }

@@ -88,4 +88,10 @@ public class DaggerActivity extends BaseActivity implements HttpRequest<PagerBea
     public void onHttpError() {
         dissmissProgressDialog();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppManagers.getToastor().showSingletonToast("Dagger");
+    }
 }
