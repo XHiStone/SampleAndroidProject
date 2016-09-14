@@ -7,6 +7,8 @@ import com.app.sampleandroidproject.beans.result.DaoSession;
 import com.app.sampleandroidproject.beans.result.SysUserResponseVo;
 import com.app.sampleandroidproject.beans.result.SysUserResponseVoDao;
 
+import org.greenrobot.greendao.database.Database;
+
 import java.util.List;
 
 /**
@@ -26,7 +28,9 @@ public class DbManagers {
 
     public DbManagers(Context context) {
         DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(context, "sample-db", null);
-        DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
+        Database db = devOpenHelper.getWritableDb();
+//        Database db = helper.getEncryptedWritableDb("pwd");
+        DaoMaster daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();
         if (userDao == null) userDao = daoSession.getSysUserResponseVoDao();
     }
@@ -53,11 +57,20 @@ public class DbManagers {
         return String.valueOf(userDao.count());
     }
 
-    public void deleteUser() {
+    public void deleteUsers() {
         userDao.deleteAll();
     }
 
+    public void deleteUser(Long key) {
+        userDao.deleteByKey(key);
+    }
+
+
     public void upUser(SysUserResponseVo user) {
         userDao.update(user);
+    }
+
+    public DaoSession getDaoSession() {
+        return daoSession;
     }
 }

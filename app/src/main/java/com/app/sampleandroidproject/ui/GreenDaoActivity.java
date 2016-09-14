@@ -71,7 +71,10 @@ public class GreenDaoActivity extends BaseActivity implements HttpRequest<PagerB
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        AppManagers.getDbManagers().deleteUser();
+                        List<SysUserResponseVo> users = AppManagers.getDbManagers().queryUser();
+                        SysUserResponseVo user = users.get(0);
+                        final Long id = user.getId();
+                        AppManagers.getDbManagers().deleteUser(id);
                         addText();
                     }
                 });
