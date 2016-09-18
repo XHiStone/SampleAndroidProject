@@ -77,7 +77,7 @@ public class MVPActivity extends BaseActivity implements LoginView {
                                 edit_account_psd.getText().toString(),
                                 "e3225cc1-eba7-4993-93f9-63044d4ee540",
                                 AppUtil.getPackageInfo(MVPActivity.this).versionName, 2);
-                        subscription = loginPresenter.login(MVPActivity.this, login);
+                        htttpRequest(loginPresenter.login(MVPActivity.this, login));
                     }
                 });
     }

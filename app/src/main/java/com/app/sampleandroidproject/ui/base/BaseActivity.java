@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import com.app.sampleandroidproject.R;
 import com.app.sampleandroidproject.app.AppManagers;
-import com.app.sampleandroidproject.http.HttpManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -31,11 +31,9 @@ import rx.Subscription;
  * @Description:
  */
 public abstract class BaseActivity extends AppCompatActivity {
-
+    private List<Subscription> subscriptions = new ArrayList<>();
     private TextView tittle_text;
-    private HttpManager httpManager;
     private FragmentManager fragmentManager;
-    protected Subscription subscription;
 
     protected abstract int getContentResource();
 
@@ -127,9 +125,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (fragments != null && fragments.size() != 0) {
             for (Fragment fragment : fragments) fragment = null;
         }
-        if (subscription != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
+        for (int i = 0; i < subscriptions.size(); i++) {
+            if (!subscriptions.get(i).isUnsubscribed()) {
+                subscriptions.get(i).unsubscribe();
+            }
         }
+        subscriptions.clear();
         AppManagers.getActivitiesManager().removeActivity(this);
         stopWork();
         super.onDestroy();
@@ -162,11 +163,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         tittle_text.setText(title);
     }
 
-    public HttpManager htttpRequest() {
-        if (httpManager == null) {
-            httpManager = AppManagers.getHttpManager();
-        }
-        return httpManager;
+    public void htttpRequest(Subscription subscription) {
+        subscriptions.add(subscription);
     }
 
     private ProgressDialog progressDialog;

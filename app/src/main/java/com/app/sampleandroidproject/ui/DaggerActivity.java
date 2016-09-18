@@ -57,7 +57,7 @@ public class DaggerActivity extends BaseActivity implements HttpRequest<PagerBea
                         login.setUser(username.getText().toString(), password.getText().toString(),
                                 "e3225cc1-eba7-4993-93f9-63044d4ee540",
                                 AppUtil.getPackageInfo(DaggerActivity.this).versionName, 2);
-                        subscription = htttpRequest().login(DaggerActivity.this, false, login, DaggerActivity.this);
+                        htttpRequest(AppManagers.getHttpManager().login(DaggerActivity.this, false, login, DaggerActivity.this));
                     }
                 });
     }
