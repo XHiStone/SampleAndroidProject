@@ -56,7 +56,7 @@ public class GreenDaoActivity extends BaseActivity implements HttpRequest<PagerB
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        htttpRequest().login(GreenDaoActivity.this, false, login, GreenDaoActivity.this);
+                       subscription = htttpRequest().login(GreenDaoActivity.this, false, login, GreenDaoActivity.this);
                         if (user != null) {
                             user.setId(null);
                             AppManagers.getDbManagers().insertUser(user);

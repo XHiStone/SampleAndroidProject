@@ -20,6 +20,7 @@ import com.app.sampleandroidproject.http.HttpManager;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import rx.Subscription;
 
 /**
  * SampleAndroidProject
@@ -34,6 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private TextView tittle_text;
     private HttpManager httpManager;
     private FragmentManager fragmentManager;
+    protected Subscription subscription;
 
     protected abstract int getContentResource();
 
@@ -125,6 +127,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (fragments != null && fragments.size() != 0) {
             for (Fragment fragment : fragments) fragment = null;
         }
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
         AppManagers.getActivitiesManager().removeActivity(this);
         stopWork();
         super.onDestroy();
@@ -165,6 +170,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private ProgressDialog progressDialog;
+
     protected void showProgressDialog(String message) {
         progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);

@@ -7,6 +7,8 @@ import com.app.sampleandroidproject.beans.request.LoginRequest;
 import com.app.sampleandroidproject.beans.result.SysUserBean;
 import com.app.sampleandroidproject.beans.result.SysUserResponseVo;
 
+import rx.Subscription;
+
 
 /**
  * RxJavaDemo
@@ -19,7 +21,7 @@ import com.app.sampleandroidproject.beans.result.SysUserResponseVo;
 
 public class HttpManager extends BaseHttp {
 
-  private static HttpManager instance;
+    private static HttpManager instance;
 
     public static HttpManager getInstance() {
         if (instance == null)
@@ -27,18 +29,16 @@ public class HttpManager extends BaseHttp {
         return instance;
     }
 
-    public void getToken(Context context, boolean isCach,
-                         String appId, String deviceId,
-                         HttpRequest<SysUserBean> httpRequest) {
-        httpRequest(context, isCach);
-        dispachHttp(api.getToken(appId, deviceId), httpRequest);
+    public Subscription getToken(Context context, boolean isCach,
+                                 String appId, String deviceId,
+                                 HttpRequest<SysUserBean> httpRequest) {
+        return httpRequest(context, isCach).dispachHttp(api.getToken(appId, deviceId), httpRequest);
     }
 
-    public void login(Context context, boolean isCach,
-                      LoginRequest loginRequest,
-                      HttpRequest<PagerBean<SysUserResponseVo>> httpRequest) {
-        httpRequest(context, isCach);
-        dispachHttp(api.login(keys, loginRequest), httpRequest);
+    public Subscription login(Context context, boolean isCach,
+                              LoginRequest loginRequest,
+                              HttpRequest<PagerBean<SysUserResponseVo>> httpRequest) {
+        return httpRequest(context, isCach).dispachHttp(api.login(keys, loginRequest), httpRequest);
 
     }
 }

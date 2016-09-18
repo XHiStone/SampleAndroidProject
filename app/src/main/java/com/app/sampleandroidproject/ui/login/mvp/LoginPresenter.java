@@ -10,6 +10,8 @@ import com.app.sampleandroidproject.beans.result.SysUserResponseVo;
 import com.app.sampleandroidproject.http.HttpRequest;
 import com.app.sampleandroidproject.view.LoginView;
 
+import rx.Subscription;
+
 /**
  * SampleAndroidProject
  * com.app.sampleandroidproject.ui.login.mvp
@@ -30,8 +32,8 @@ public class LoginPresenter implements HttpRequest<PagerBean<SysUserResponseVo>>
         loginView.canLogin(!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password));
     }
 
-    public void login(Context context, LoginRequest login) {
-        AppManagers.getHttpManager().login(context, false, login, this);
+    public Subscription login(Context context, LoginRequest login) {
+        return AppManagers.getHttpManager().login(context, false, login, this);
     }
 
     public void saveLoginInfo(String username, String password) {

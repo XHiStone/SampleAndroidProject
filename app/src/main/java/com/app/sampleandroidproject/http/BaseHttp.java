@@ -123,37 +123,6 @@ public class BaseHttp {
         return builder.build().create(clazz);
     }
 
-    protected <T> Subscription dispachHttp(Observable<ModleBean<T>> observable,
-                                           final HttpRequest<T> httpRequest) {
-        return httpResult(observable, new Subscriber<T>() {
-            @Override
-            public void onStart() {
-                super.onStart();
-                httpRequest.onHttpStart();
-            }
-
-            @Override
-            public void onCompleted() {
-                unsubscribe();
-                httpRequest.onHttpFinish();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                unsubscribe();
-                ThrowErrorInfo(e);
-                httpRequest.onHttpError();
-                Log.e("tag", "------>onError=" + e.getMessage());
-
-            }
-
-            @Override
-            public void onNext(T t) {
-                httpRequest.onHttpSuccess(t);
-            }
-        });
-    }
-
     private void ThrowErrorInfo(Throwable e) {
         if (e instanceof HttpException) {
             HttpException httpException = (HttpException) e;
@@ -213,11 +182,42 @@ public class BaseHttp {
      * @Description: (isCach是否缓存，firstCach请求首选缓存)
      * @params [context, isCach, firstCach]
      */
-    protected void httpRequest(Context context, boolean isCach) {
+    protected BaseHttp httpRequest(Context context, boolean isCach) {
         api = createService(context, HttpApi.class, null, Constants.BASEURL, isCach);
         if (!TextUtils.isEmpty(AppManagers.getTokenUtil().getToken()) && keys.size() == 0)
             keys.put(TOKEN, AppManagers.getTokenUtil().getToken());
+        return this;
     }
 
+    protected <T> Subscription dispachHttp(Observable<ModleBean<T>> observable,
+                                           final HttpRequest<T> httpRequest) {
+        return httpResult(observable, new Subscriber<T>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                httpRequest.onHttpStart();
+            }
+
+            @Override
+            public void onCompleted() {
+                unsubscribe();
+                httpRequest.onHttpFinish();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                unsubscribe();
+                ThrowErrorInfo(e);
+                httpRequest.onHttpError();
+                Log.e("tag", "------>onError=" + e.getMessage());
+
+            }
+
+            @Override
+            public void onNext(T t) {
+                httpRequest.onHttpSuccess(t);
+            }
+        });
+    }
 }
 
