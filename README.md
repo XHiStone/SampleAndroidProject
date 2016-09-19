@@ -51,7 +51,7 @@ multidex针对构建超过65K个方法进行分包处理
 ```
     compile 'com.android.support:multidex:1.0.1'
 ```
-####虽然我们开起来multidex是一个极好的东西，但是multidex还是存在自己的局限性，我们在开发测试之前要清楚局限性是什么：
+####虽然我们开发起来multidex是一个极好的东西，但是multidex还是存在自己的局限性，我们在开发测试之前要清楚局限性是什么：
   8.1如果二DEX文件太大，安装分割dex文件是一个复杂的过程，可能会导致应用程序无响应（ANR）的错误。
       在这种情况下，你应该尽量的减小dex文件的大小和删除无用的逻辑，而不是完全依赖于multidex。
 <br /><br />
@@ -74,4 +74,30 @@ Butterknife 最实用的注解框架生成代码来执行查询，而不是缓�
     compile 'com.jakewharton:butterknife:8.0.1'
     //butterknife 8.0.1版本将compiler分离，需要apt插件
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
+```
+#Gradle配置
+```
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.1.1'
+    }
+}
+```
+插件
+```
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'org.greenrobot.greendao'
+```
+```
+ buildTypes {
+            ...
+        lintOptions {
+            warning 'InvalidPackage'
+        }
+    }
 ```
