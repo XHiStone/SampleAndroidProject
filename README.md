@@ -21,7 +21,7 @@ rxbinding
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
 ```
 ###4.依赖注入框架
-Dagger2（使模块间解耦）
+Dagger2（使模块间解耦尤其适合MVP模式）
 ```
     apt 'com.google.dagger:dagger-compiler:2.2'
     provided 'org.glassfish:javax.annotation:10.0-b28'
