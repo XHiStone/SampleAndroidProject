@@ -13,7 +13,7 @@
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        fresco:actualImageScaleType="centerInside"
+        fresco:actualImageScaleType="focusCrop"
         fresco:backgroundImage="@android:color/white"
         fresco:fadeDuration="2000"
         fresco:placeholderImage="@android:color/white"

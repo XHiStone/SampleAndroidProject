@@ -14,6 +14,7 @@ import com.app.sampleandroidproject.beans.result.SysUserResponseVo;
 import com.app.sampleandroidproject.http.HttpRequest;
 import com.app.sampleandroidproject.ui.base.BaseActivity;
 import com.app.sampleandroidproject.utils.AppUtil;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.concurrent.TimeUnit;
@@ -34,6 +35,8 @@ public class DaggerActivity extends BaseActivity implements HttpRequest<PagerBea
     EditText username;
     @BindView(R.id.password)
     EditText password;
+    @BindView(R.id.my_image_view)
+    SimpleDraweeView my_image_view;
 
     @Override
     protected int getContentResource() {
@@ -60,6 +63,7 @@ public class DaggerActivity extends BaseActivity implements HttpRequest<PagerBea
                         htttpRequest(AppManagers.getHttpManager().login(DaggerActivity.this, false, login, DaggerActivity.this));
                     }
                 });
+        my_image_view.setImageURI("http://img2.3lian.com/2014/f2/37/d/40.jpg");
     }
 
     @Override

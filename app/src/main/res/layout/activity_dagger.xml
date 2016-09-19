@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/my_image_view"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:backgroundImage="@android:color/white"
+        fresco:fadeDuration="2000"
+        fresco:placeholderImage="@android:color/white"
+        fresco:placeholderImageScaleType="focusCrop"
+        fresco:progressBarAutoRotateInterval="1000"
+        fresco:progressBarImage="@mipmap/progress_bar"
+        fresco:progressBarImageScaleType="centerInside"
+        fresco:roundBottomLeft="true"
+        fresco:roundBottomRight="true"
+        fresco:roundTopLeft="true"
+        fresco:roundTopRight="true"
+        fresco:roundedCornerRadius="5dp"
+        android:layout_alignParentTop="true"
+        />
 
 
     <EditText
         android:id="@+id/username"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/my_image_view"
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:id="@+id/password"
