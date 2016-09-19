@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/my_image_view"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        fresco:actualImageScaleType="centerInside"
+        fresco:backgroundImage="@android:color/white"
+        fresco:fadeDuration="2000"
+        fresco:placeholderImage="@android:color/white"
+        fresco:placeholderImageScaleType="focusCrop"
+        fresco:progressBarAutoRotateInterval="1000"
+        fresco:progressBarImage="@mipmap/progress_bar"
+        fresco:progressBarImageScaleType="centerInside"
+        fresco:roundAsCircle="true"
+        fresco:roundingBorderColor="@android:color/white"
+        fresco:roundingBorderWidth="5dp" />
+    <!--fresco:roundBottomLeft="true"-->
+    <!--fresco:roundBottomRight="true"-->
+    <!--fresco:roundTopLeft="true"-->
+    <!--fresco:roundTopRight="true"-->
+    <!--fresco:roundedCornerRadius="5dp"-->
 
     <com.app.sampleandroidproject.view.ClearEditText
         android:id="@+id/edit_account_number"
@@ -43,10 +68,10 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:enabled="false"
         android:text="登录"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:enabled="false"/>
+        android:textSize="18sp" />
 
 
 </LinearLayout>

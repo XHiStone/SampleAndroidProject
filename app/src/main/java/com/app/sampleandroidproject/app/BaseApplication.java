@@ -8,6 +8,7 @@ import com.app.sampleandroidproject.app.dagger.DaggerAppComponent;
 import com.app.sampleandroidproject.ui.login.dagger.LoginComponent;
 import com.app.sampleandroidproject.ui.login.dagger.LoginModule;
 import com.app.sampleandroidproject.utils.BusProvider;
+import com.app.sampleandroidproject.utils.ImagePipelineConfigFactory;
 import com.app.sampleandroidproject.view.LoginView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.leakcanary.LeakCanary;
@@ -36,10 +37,10 @@ public class BaseApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         application = this;
-        Fresco.initialize(this);
         LeakCanary.install(this);
         BusProvider.register(this);
         AppManagers.getAppManagers(this);
+        Fresco.initialize(this, ImagePipelineConfigFactory.getOkHttpImagePipelineConfig(this));
         appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
     }
 

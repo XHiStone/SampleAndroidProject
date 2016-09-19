@@ -1,6 +1,7 @@
 package com.app.sampleandroidproject.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -14,6 +15,9 @@ import com.app.sampleandroidproject.ui.login.mvp.LoginPresenter;
 import com.app.sampleandroidproject.utils.AppUtil;
 import com.app.sampleandroidproject.view.ClearEditText;
 import com.app.sampleandroidproject.view.LoginView;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
@@ -36,6 +40,10 @@ public class MVPActivity extends BaseActivity implements LoginView {
     ClearEditText edit_account_psd;
     @BindView(R.id.btn_login_commit)
     Button btn_login_commit;
+    @BindView(R.id.my_image_view)
+    SimpleDraweeView my_image_view;
+
+    Uri uri = Uri.parse("http://img2.3lian.com/2014/f2/37/d/40.jpg");
 
     @Override
     protected int getContentResource() {
@@ -80,6 +88,13 @@ public class MVPActivity extends BaseActivity implements LoginView {
                         htttpRequest(loginPresenter.login(MVPActivity.this, login));
                     }
                 });
+
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setAutoPlayAnimations(true)
+                .setUri(uri)
+                .build();
+
+        my_image_view.setController(controller);
     }
 
     @Override
