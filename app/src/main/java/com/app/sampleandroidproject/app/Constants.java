@@ -15,7 +15,8 @@ public class Constants {
     public static final String HTTP_HOST = "http://172.16.10.101";
     public static final String HTTP_PORT = ":8080";
     public static final String HTTP_SERVER = HTTP_HOST + HTTP_PORT + "/";
-    public static final String BASEURL = HTTP_SERVER + "mt/webservice/v1_1/";
+//    public static final String BASEURL = HTTP_SERVER + "mt/webservice/v1_1/";
+    public static final String BASEURL = "http://116.247.93.50:5902/appservice/";
 
     //-------debug和缓存---------
     public static final Boolean HTTP_DEBUG = true;

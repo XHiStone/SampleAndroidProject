@@ -2,6 +2,7 @@ package com.app.sampleandroidproject.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -9,6 +10,8 @@ import android.widget.ListView;
 
 import com.app.sampleandroidproject.R;
 import com.app.sampleandroidproject.app.AppManagers;
+import com.app.sampleandroidproject.beans.result.HttpResultCityAndSpace;
+import com.app.sampleandroidproject.http.HttpRequest;
 import com.app.sampleandroidproject.ui.base.BaseActivity;
 import com.app.sampleandroidproject.ui.rxexample.RxDaoActivity;
 import com.jakewharton.rxbinding.widget.RxAdapterView;
@@ -43,6 +46,27 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initData() {
+        AppManagers.getHttpManager().getCity(this, false, new HttpRequest<HttpResultCityAndSpace>() {
+            @Override
+            public void onHttpStart() {
+
+            }
+
+            @Override
+            public void onHttpSuccess(HttpResultCityAndSpace httpResultCityAndSpace) {
+                Log.i("tag"," httpResultCityAndSpace.getCity().size()--"+ httpResultCityAndSpace.getCity().get(0).getName());
+            }
+
+            @Override
+            public void onHttpFinish() {
+
+            }
+
+            @Override
+            public void onHttpError() {
+
+            }
+        });
         names = new String[]{
                 "DaggerActivity", "MVPActivity", "GreenDaoActivity", "RxDaoActivity"
         };

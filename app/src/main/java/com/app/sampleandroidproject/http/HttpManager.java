@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.app.sampleandroidproject.beans.PagerBean;
 import com.app.sampleandroidproject.beans.request.LoginRequest;
+import com.app.sampleandroidproject.beans.result.HttpResultCityAndSpace;
 import com.app.sampleandroidproject.beans.result.SysUserBean;
 import com.app.sampleandroidproject.beans.result.SysUserResponseVo;
 
@@ -40,5 +41,10 @@ public class HttpManager extends BaseHttp {
                               HttpRequest<PagerBean<SysUserResponseVo>> httpRequest) {
         return httpRequest(context, isCach).dispachHttp(api.login(keys, loginRequest), httpRequest);
 
+    }
+
+    public Subscription getCity(Context context, boolean isCach,
+                                HttpRequest<HttpResultCityAndSpace> httpRequest) {
+        return httpRequest(context, isCach).dispachHttp(api.getCity(), httpRequest);
     }
 }

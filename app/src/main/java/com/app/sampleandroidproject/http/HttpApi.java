@@ -4,6 +4,7 @@ package com.app.sampleandroidproject.http;
 import com.app.sampleandroidproject.beans.ModleBean;
 import com.app.sampleandroidproject.beans.PagerBean;
 import com.app.sampleandroidproject.beans.request.LoginRequest;
+import com.app.sampleandroidproject.beans.result.HttpResultCityAndSpace;
 import com.app.sampleandroidproject.beans.result.SysUserBean;
 import com.app.sampleandroidproject.beans.result.SysUserResponseVo;
 
@@ -34,4 +35,6 @@ public interface HttpApi {
     @POST("auth/login")
     Observable<ModleBean<PagerBean<SysUserResponseVo>>> login(@QueryMap Map<String, String> keys,
                                                               @Body LoginRequest login);
+    @GET("meeting/cityAndSpace.json")
+    Observable<ModleBean<HttpResultCityAndSpace>> getCity();
 }
