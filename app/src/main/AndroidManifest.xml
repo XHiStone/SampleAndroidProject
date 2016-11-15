@@ -38,6 +38,7 @@
         <activity android:name=".ui.MVPActivity" />
         <activity android:name=".ui.GreenDaoActivity" />
         <activity android:name=".ui.rxexample.RxDaoActivity" />
+        <activity android:name=".ui.recycleview.RecycleViewWithDragActivity" />
     </application>
 
 </manifest>

@@ -13,6 +13,7 @@ import com.app.sampleandroidproject.app.AppManagers;
 import com.app.sampleandroidproject.beans.result.HttpResultCityAndSpace;
 import com.app.sampleandroidproject.http.HttpRequest;
 import com.app.sampleandroidproject.ui.base.BaseActivity;
+import com.app.sampleandroidproject.ui.recycleview.RecycleViewWithDragActivity;
 import com.app.sampleandroidproject.ui.rxexample.RxDaoActivity;
 import com.jakewharton.rxbinding.widget.RxAdapterView;
 
@@ -68,7 +69,7 @@ public class MainActivity extends BaseActivity {
             }
         });
         names = new String[]{
-                "DaggerActivity", "MVPActivity", "GreenDaoActivity", "RxDaoActivity"
+                "DaggerActivity", "MVPActivity", "GreenDaoActivity", "RxDaoActivity","recycleViewWithDragActivity"
         };
         ArrayAdapter adapter = new ArrayAdapter(this,
                 android.R.layout.simple_expandable_list_item_1, Arrays.asList(names));
@@ -90,6 +91,9 @@ public class MainActivity extends BaseActivity {
                                 break;
                             case 3:
                                 startActivity(new Intent(MainActivity.this, RxDaoActivity.class));
+                                break;
+                            case 4:
+                                startActivity(new Intent(MainActivity.this, RecycleViewWithDragActivity.class));
                                 break;
                             default:
                                 break;
