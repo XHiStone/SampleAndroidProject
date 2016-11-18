@@ -21,7 +21,7 @@ import rx.Subscription;
  * @Description:
  */
 
-public class LoginPresenter implements HttpRequest<PagerBean<SysUserResponseVo>> {
+public class LoginPresenter {
     private final LoginView loginView;
 
     public LoginPresenter(LoginView loginView) {
@@ -33,31 +33,32 @@ public class LoginPresenter implements HttpRequest<PagerBean<SysUserResponseVo>>
     }
 
     public Subscription login(Context context, LoginRequest login) {
-        return AppManagers.getHttpManager().login(context, false, login, this);
+        return AppManagers.getHttpManager().login(false, login, new HttpRequest<PagerBean<SysUserResponseVo>>() {
+
+            @Override
+            public void onHttpStart() {
+                loginView.showLoading();
+            }
+
+            @Override
+            public void onHttpSuccess(PagerBean<SysUserResponseVo> result) {
+                loginView.success(result.content.get(0));
+            }
+
+            @Override
+            public void onHttpError() {
+                loginView.failture();
+            }
+
+            @Override
+            public void onHttpFinish() {
+                loginView.hideLoading();
+            }
+        });
     }
 
     public void saveLoginInfo(String username, String password) {
 
     }
 
-
-    @Override
-    public void onHttpStart() {
-        loginView.showLoading();
-    }
-
-    @Override
-    public void onHttpSuccess(PagerBean<SysUserResponseVo> loginResultPagerBean) {
-        loginView.success(loginResultPagerBean.content.get(0));
-    }
-
-    @Override
-    public void onHttpFinish() {
-        loginView.hideLoading();
-    }
-
-    @Override
-    public void onHttpError() {
-        loginView.failture();
-    }
 }

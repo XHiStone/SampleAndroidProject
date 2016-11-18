@@ -1,12 +1,14 @@
 package com.app.sampleandroidproject.http;
 
-import android.content.Context;
-
 import com.app.sampleandroidproject.beans.PagerBean;
 import com.app.sampleandroidproject.beans.request.LoginRequest;
 import com.app.sampleandroidproject.beans.result.HttpResultCityAndSpace;
+import com.app.sampleandroidproject.beans.result.PullImgResult;
 import com.app.sampleandroidproject.beans.result.SysUserBean;
 import com.app.sampleandroidproject.beans.result.SysUserResponseVo;
+
+import java.io.File;
+import java.util.List;
 
 import rx.Subscription;
 
@@ -30,21 +32,26 @@ public class HttpManager extends BaseHttp {
         return instance;
     }
 
-    public Subscription getToken(Context context, boolean isCach,
+    public Subscription getToken( boolean isCach,
                                  String appId, String deviceId,
                                  HttpRequest<SysUserBean> httpRequest) {
-        return httpRequest(context, isCach).dispachHttp(api.getToken(appId, deviceId), httpRequest);
+        return httpRequest(isCach).dispachHttp(api.getToken(appId, deviceId), httpRequest);
     }
 
-    public Subscription login(Context context, boolean isCach,
+    public Subscription login(boolean isCach,
                               LoginRequest loginRequest,
                               HttpRequest<PagerBean<SysUserResponseVo>> httpRequest) {
-        return httpRequest(context, isCach).dispachHttp(api.login(keys, loginRequest), httpRequest);
+        return httpRequest(isCach).dispachHttp(api.login(keys, loginRequest), httpRequest);
 
     }
 
-    public Subscription getCity(Context context, boolean isCach,
+    public Subscription getCity( boolean isCach,
                                 HttpRequest<HttpResultCityAndSpace> httpRequest) {
-        return httpRequest(context, isCach).dispachHttp(api.getCity(), httpRequest);
+        return httpRequest(isCach).dispachHttp(api.getCity(), httpRequest);
     }
+
+    public Subscription pullImg(String userId, List<File> photoList, boolean isCach, HttpRequest<PullImgResult> httpRequest) {
+        return httpRequest(isCach).dispachHttp(pull(userId, photoList), httpRequest);
+    }
+
 }

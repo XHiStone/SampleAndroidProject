@@ -17,15 +17,15 @@ public class BusProvider {
     private BusProvider() {
     }
 
-    public static void post(Object obj) {
-        _bus.post(obj);
+    public static <T> void post (T t) {
+        _bus.post(t);
     }
 
-    public static void register(Object obj) {
+    public static void register (Object obj) {
         _bus.register(obj);
     }
 
-    public static void unregister(Object obj) {
+    public static void unregister (Object obj) {
         _bus.unregister(obj);
     }
 }

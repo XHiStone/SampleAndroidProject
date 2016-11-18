@@ -24,7 +24,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import rx.functions.Action1;
 
-public class DaggerActivity extends BaseActivity implements HttpRequest<PagerBean<SysUserResponseVo>> {
+public class DaggerActivity extends BaseActivity {
 
     @Inject
     protected LoginRequest login;
@@ -60,7 +60,18 @@ public class DaggerActivity extends BaseActivity implements HttpRequest<PagerBea
                         login.setUser(username.getText().toString(), password.getText().toString(),
                                 "e3225cc1-eba7-4993-93f9-63044d4ee540",
                                 AppUtil.getPackageInfo(DaggerActivity.this).versionName, 2);
-                        htttpRequest(AppManagers.getHttpManager().login(DaggerActivity.this, false, login, DaggerActivity.this));
+                        htttpRequest(AppManagers.getHttpManager().login( false, login, new HttpRequest<PagerBean<SysUserResponseVo>>() {
+                            @Override
+                            public void onHttpSuccess(PagerBean<SysUserResponseVo> result) {
+                                startActivity(new Intent(DaggerActivity.this, MainActivity.class));
+                                AppManagers.getActivitiesManager().finishActivity(DaggerActivity.this);
+                            }
+
+                            @Override
+                            public void onHttpError() {
+
+                            }
+                        }));
                     }
                 });
         my_image_view.setImageURI("http://img2.3lian.com/2014/f2/37/d/40.jpg");
@@ -71,27 +82,6 @@ public class DaggerActivity extends BaseActivity implements HttpRequest<PagerBea
 
     }
 
-
-    @Override
-    public void onHttpStart() {
-        showProgressDialog("加载中...");
-    }
-
-    @Override
-    public void onHttpSuccess(PagerBean<SysUserResponseVo> sysUserResponseVoPagerBean) {
-        startActivity(new Intent(this, MainActivity.class));
-        AppManagers.getActivitiesManager().finishActivity(this);
-    }
-
-    @Override
-    public void onHttpFinish() {
-        dissmissProgressDialog();
-    }
-
-    @Override
-    public void onHttpError() {
-        dissmissProgressDialog();
-    }
 
     @Override
     protected void onDestroy() {

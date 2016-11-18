@@ -70,4 +70,6 @@ dependencies {
     //butterknife 8.0.1版本将compiler分离，需要apt插件
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
 
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+
 }

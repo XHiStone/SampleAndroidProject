@@ -24,7 +24,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import rx.functions.Action1;
 
-public class GreenDaoActivity extends BaseActivity implements HttpRequest<PagerBean<SysUserResponseVo>> {
+public class GreenDaoActivity extends BaseActivity {
     @Inject
     protected LoginRequest login;
 
@@ -56,7 +56,17 @@ public class GreenDaoActivity extends BaseActivity implements HttpRequest<PagerB
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        htttpRequest(AppManagers.getHttpManager().login(GreenDaoActivity.this, false, login, GreenDaoActivity.this));
+                        htttpRequest(AppManagers.getHttpManager().login(false, login, new HttpRequest<PagerBean<SysUserResponseVo>>() {
+                            @Override
+                            public void onHttpSuccess(PagerBean<SysUserResponseVo> result) {
+                                user = result.content.get(0);
+                            }
+
+                            @Override
+                            public void onHttpError() {
+
+                            }
+                        }));
                         if (user != null) {
                             user.setId(null);
                             AppManagers.getDbManagers().insertUser(user);
@@ -71,7 +81,17 @@ public class GreenDaoActivity extends BaseActivity implements HttpRequest<PagerB
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        htttpRequest(AppManagers.getHttpManager().login(GreenDaoActivity.this, false, login, GreenDaoActivity.this));
+                        htttpRequest(AppManagers.getHttpManager().login( false, login, new HttpRequest<PagerBean<SysUserResponseVo>>() {
+                            @Override
+                            public void onHttpSuccess(PagerBean<SysUserResponseVo> result) {
+                                user = result.content.get(0);
+                            }
+
+                            @Override
+                            public void onHttpError() {
+
+                            }
+                        }));
                         List<SysUserResponseVo> users = AppManagers.getDbManagers().queryUser();
                         if (users.size() > 0) {
                             SysUserResponseVo user = users.get(0);
@@ -112,26 +132,6 @@ public class GreenDaoActivity extends BaseActivity implements HttpRequest<PagerB
 
     @Override
     protected void stopWork() {
-
-    }
-
-    @Override
-    public void onHttpStart() {
-
-    }
-
-    @Override
-    public void onHttpSuccess(PagerBean<SysUserResponseVo> sysUserResponseVoPagerBean) {
-        user = sysUserResponseVoPagerBean.content.get(0);
-    }
-
-    @Override
-    public void onHttpFinish() {
-
-    }
-
-    @Override
-    public void onHttpError() {
 
     }
 }

@@ -28,7 +28,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import rx.functions.Action1;
 
-public class MVPActivity extends BaseActivity implements LoginView {
+public class MVPActivity extends BaseActivity implements LoginView{
 
     @Inject
     protected LoginPresenter loginPresenter;
@@ -119,17 +119,14 @@ public class MVPActivity extends BaseActivity implements LoginView {
 
     @Override
     public void failture() {
-        dissmissProgressDialog();
     }
 
     @Override
     public void showLoading() {
-        showProgressDialog("加载中...");
     }
 
     @Override
     public void hideLoading() {
-        dissmissProgressDialog();
     }
 
     @Override

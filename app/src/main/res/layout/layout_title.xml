@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:id="@+id/tittle_bar"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize"
     android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="86px"
         android:layout_marginTop="@dimen/title_bar_dimmens">
 
         <ImageView
             android:id="@+id/tittle_logo_img"
-            android:layout_width="60dp"
-            android:layout_height="46dp"
+            android:layout_width="60px"
+            android:layout_height="46px"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="15px" />
+            android:paddingLeft="30px"
+            android:paddingRight="10px" />
 
         <TextView
             android:id="@+id/tittle_text"
@@ -26,39 +29,69 @@
             android:layout_centerInParent="true"
             android:ellipsize="end"
             android:gravity="center"
+            android:maxLength="4"
             android:singleLine="true"
             android:text="消息"
             android:textColor="#f0f0f0"
             android:textSize="18sp" />
 
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_title_head"
+            android:layout_width="46px"
+            android:layout_height="46px"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="14px"
+            android:layout_toLeftOf="@id/tittle_text"
+            android:visibility="gone"
+            fresco:actualImageScaleType="focusCrop"
+            fresco:fadeDuration="1000"
+            fresco:placeholderImage="@mipmap/my_photo"
+            fresco:placeholderImageScaleType="focusCrop"
+            fresco:roundAsCircle="true"
+            fresco:roundingBorderColor="@color/gray_CC"
+            fresco:roundingBorderWidth="1px" />
+
+        <ImageView
+            android:id="@+id/img_title_right"
+            android:layout_width="35px"
+            android:layout_height="21px"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="6px"
+            android:layout_toRightOf="@id/tittle_text"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/tittle_img_drawer"
-            android:layout_width="60px"
-            android:layout_height="60px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:layout_marginRight="10px" />
+            android:paddingBottom="10px"
+            android:paddingRight="20px"
+            android:paddingTop="10px"
+            android:scaleType="centerInside" />
 
         <ImageView
             android:id="@+id/tittle_img_find"
-            android:layout_width="60dp"
-            android:layout_height="46dp"
+            android:layout_width="60px"
+            android:layout_height="46px"
             android:layout_centerInParent="true"
             android:layout_marginRight="10px"
-            android:layout_toLeftOf="@id/tittle_img_drawer" />
+            android:layout_toLeftOf="@+id/tittle_img_drawer"
+            android:scaleType="centerInside" />
 
         <TextView
             android:id="@+id/tittle_login_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
+            android:layout_toLeftOf="@+id/tittle_img_drawer"
             android:gravity="center"
-            android:padding="15px"
-            android:text="登录"
+            android:text=""
+            android:paddingRight="5px"
             android:textColor="#f0f0f0"
-            android:textSize="30px"
-            android:visibility="gone" />
+            android:textSize="32px" />
 
         <TextView
             android:id="@+id/tittle_huanxin_text"
@@ -67,10 +100,8 @@
             android:layout_centerInParent="true"
             android:layout_toRightOf="@id/tittle_logo_img"
             android:gravity="center"
-            android:padding="15px"
-            android:text="发布话题"
+            android:text=""
             android:textColor="#f0f0f0"
-            android:textSize="30px"
-            android:visibility="gone" />
+            android:textSize="32px" />
     </RelativeLayout>
 </LinearLayout>

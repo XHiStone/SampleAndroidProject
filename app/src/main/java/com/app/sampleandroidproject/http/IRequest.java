@@ -10,15 +10,12 @@ package com.app.sampleandroidproject.http;
  */
 
 
+public interface IRequest<T> {
+    void onHttpStart();
 
-public abstract class HttpRequest<T> implements IRequest<T> {
+    void onHttpSuccess(T result);
 
-    @Override
-    public void onHttpStart() {
-    }
+    void onHttpFinish();
 
-    @Override
-    public void onHttpFinish() {
-    }
-
+    void onHttpError();
 }

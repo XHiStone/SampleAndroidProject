@@ -52,7 +52,7 @@ public class TokenUtil {
             }
 
             AppManagers.getHttpManager()
-                    .getToken(context, true, APP_ID, deviceId, new HttpRequest<SysUserBean>() {
+                    .getToken( true, APP_ID, deviceId, new HttpRequest<SysUserBean>() {
                                 @Override
                                 public void onHttpStart() {
                                 }

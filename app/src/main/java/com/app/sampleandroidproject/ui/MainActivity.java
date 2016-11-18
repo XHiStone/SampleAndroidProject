@@ -47,20 +47,11 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initData() {
-        AppManagers.getHttpManager().getCity(this, false, new HttpRequest<HttpResultCityAndSpace>() {
-            @Override
-            public void onHttpStart() {
-
-            }
+        AppManagers.getHttpManager().getCity(false, new HttpRequest<HttpResultCityAndSpace>() {
 
             @Override
             public void onHttpSuccess(HttpResultCityAndSpace httpResultCityAndSpace) {
                 Log.i("tag"," httpResultCityAndSpace.getCity().size()--"+ httpResultCityAndSpace.getCity().get(0).getName());
-            }
-
-            @Override
-            public void onHttpFinish() {
-
             }
 
             @Override
@@ -117,6 +108,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AppManagers.getToastor().showSingletonToast("Main");
+        toastor.showSingletonToast("Main");
     }
 }

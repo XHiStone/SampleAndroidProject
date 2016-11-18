@@ -28,6 +28,7 @@ public class AppManagers {
     private static Toastor toastor;
     private static ActivitiesManager activities;
     private static DbManagers dbManagers;
+    private static RequestManager requestManager;
 
     public static AppManagers getAppManagers(Context context) {
 
@@ -47,6 +48,10 @@ public class AppManagers {
 
         if (dbManagers == null) {
             dbManagers = DbManagers.getDbManagers(context);
+        }
+
+        if (requestManager == null) {
+            requestManager = RequestManager.get();
         }
 
         return appManagers;
@@ -80,5 +85,9 @@ public class AppManagers {
 
     public static DbManagers getDbManagers() {
         return dbManagers;
+    }
+
+    public static RequestManager getRequestManager() {
+        return requestManager;
     }
 }

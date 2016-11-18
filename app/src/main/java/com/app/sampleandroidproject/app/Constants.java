@@ -18,12 +18,17 @@ public class Constants {
 //    public static final String BASEURL = HTTP_SERVER + "mt/webservice/v1_1/";
     public static final String BASEURL = "http://116.247.93.50:5902/appservice/";
 
+
     //-------debug和缓存---------
     public static final Boolean HTTP_DEBUG = true;
     public static final int HTTP_CACHSIZE = 10 * 1024 * 1024;  //设置缓存 10M
     public static final String HTTP_CACHFILENAME = "httpCache";
     public static final int HTTP_CONNECTTIME = 10; //秒
     public static final String KEY_TOKEN = "mm_token";
+    public static final String PLAIN = "text/plain";
+    public static final String MULTIPART = "multipart/form-data";
+    public static final String PULL_IMG_PR = "img";
+    public static final String PULL_IMG_PO = "\"; filename=\"";
 
 }
 
