@@ -30,5 +30,8 @@ public class Constants {
     public static final String PULL_IMG_PR = "img";
     public static final String PULL_IMG_PO = "\"; filename=\"";
 
+    //--------final-----------
+    public static final int PAY_FALT = 0;
+    public static final int PAY_SUCCESS = 1;
 }
 

@@ -13,6 +13,7 @@ import com.app.sampleandroidproject.view.LoginView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.otto.Subscribe;
+import com.orhanobut.logger.Logger;
 
 /**
  * SampleAndroidProject
@@ -42,6 +43,11 @@ public class BaseApplication extends MultiDexApplication {
         AppManagers.getAppManagers(this);
         Fresco.initialize(this, ImagePipelineConfigFactory.getOkHttpImagePipelineConfig(this));
         appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+        initLogger();
+    }
+
+    private void initLogger() {
+        Logger.init("Sample").methodCount(5);
     }
 
     public LoginComponent creatLoginComponent(LoginView loginView) {
@@ -54,4 +60,5 @@ public class BaseApplication extends MultiDexApplication {
             AppManagers.getToastor().showSingletonToast(error);
         }
     }
+
 }
