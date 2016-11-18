@@ -4,6 +4,7 @@ package com.app.sampleandroidproject.http;
 import com.app.sampleandroidproject.beans.ModleBean;
 import com.app.sampleandroidproject.beans.PagerBean;
 import com.app.sampleandroidproject.beans.request.LoginRequest;
+import com.app.sampleandroidproject.beans.result.HomeTitleResult;
 import com.app.sampleandroidproject.beans.result.HttpResultCityAndSpace;
 import com.app.sampleandroidproject.beans.result.PullImgResult;
 import com.app.sampleandroidproject.beans.result.SysUserBean;
@@ -20,6 +21,7 @@ import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -48,4 +50,9 @@ public interface HttpApi {
     Observable<PullImgResult> pullImg(
             @Part("uuid") RequestBody uuid,
             @PartMap Map<String, RequestBody> photos);
+
+    @GET
+    Observable<HomeTitleResult> getHomeTitle(
+            @Url String url
+    );
 }
