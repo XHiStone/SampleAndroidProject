@@ -2,7 +2,6 @@ package com.app.sampleandroidproject.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -12,16 +11,18 @@ import com.app.sampleandroidproject.R;
 import com.app.sampleandroidproject.app.AppManagers;
 import com.app.sampleandroidproject.beans.result.HttpResultCityAndSpace;
 import com.app.sampleandroidproject.http.HttpRequest;
+import com.app.sampleandroidproject.ui.Enum.ClassEnum;
 import com.app.sampleandroidproject.ui.base.BaseActivity;
-import com.app.sampleandroidproject.ui.recycleview.RecycleViewWithDragActivity;
-import com.app.sampleandroidproject.ui.rxexample.RxDaoActivity;
 import com.jakewharton.rxbinding.widget.RxAdapterView;
+import com.orhanobut.logger.Logger;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import rx.functions.Action1;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
 
@@ -51,7 +52,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onHttpSuccess(HttpResultCityAndSpace httpResultCityAndSpace) {
-                Log.i("tag"," httpResultCityAndSpace.getCity().size()--"+ httpResultCityAndSpace.getCity().get(0).getName());
+                Logger.i("httpResultCityAndSpace.getCity().size()--" + httpResultCityAndSpace.getCity().get(0).getName());
             }
 
             @Override
@@ -60,37 +61,23 @@ public class MainActivity extends BaseActivity {
             }
         });
         names = new String[]{
-                "DaggerActivity", "MVPActivity", "GreenDaoActivity", "RxDaoActivity","recycleViewWithDragActivity"
+                "DaggerActivity", "MVPActivity", "GreenDaoActivity", "RxDaoActivity", "recycleViewWithDragActivity"
         };
+
         ArrayAdapter adapter = new ArrayAdapter(this,
                 android.R.layout.simple_expandable_list_item_1, Arrays.asList(names));
         listView.setAdapter(adapter);
         listView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
         RxAdapterView.itemClicks(listView).throttleFirst(500, TimeUnit.MILLISECONDS)
-                .subscribe(new Action1<Integer>() {
-                    @Override
-                    public void call(Integer integer) {
-                        switch (integer) {
-                            case 0:
-                                startActivity(new Intent(MainActivity.this, DaggerActivity.class));
-                                break;
-                            case 1:
-                                startActivity(new Intent(MainActivity.this, MVPActivity.class));
-                                break;
-                            case 2:
-                                startActivity(new Intent(MainActivity.this, GreenDaoActivity.class));
-                                break;
-                            case 3:
-                                startActivity(new Intent(MainActivity.this, RxDaoActivity.class));
-                                break;
-                            case 4:
-                                startActivity(new Intent(MainActivity.this, RecycleViewWithDragActivity.class));
-                                break;
-                            default:
-                                break;
-                        }
-                    }
+                .observeOn(Schedulers.newThread())
+                .map((Func1) (integer) -> ClassEnum.valueOf((Integer) integer))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aClass -> {
+                    if (aClass != null)
+                        startActivity(new Intent(MainActivity.this, (Class<?>) aClass));
                 });
+
+
     }
 
     @Override

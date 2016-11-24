@@ -22,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import rx.functions.Action1;
 
 public class DaggerActivity extends BaseActivity {
 
@@ -37,6 +36,7 @@ public class DaggerActivity extends BaseActivity {
     EditText password;
     @BindView(R.id.my_image_view)
     SimpleDraweeView my_image_view;
+
 
     @Override
     protected int getContentResource() {
@@ -54,25 +54,24 @@ public class DaggerActivity extends BaseActivity {
         username.setText("15892");
         password.setText("123456");
         RxView.clicks(button).throttleFirst(500, TimeUnit.MILLISECONDS)
-                .subscribe(new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        login.setUser(username.getText().toString(), password.getText().toString(),
-                                "e3225cc1-eba7-4993-93f9-63044d4ee540",
-                                AppUtil.getPackageInfo(DaggerActivity.this).versionName, 2);
-                        htttpRequest(AppManagers.getHttpManager().login( false, login, new HttpRequest<PagerBean<SysUserResponseVo>>() {
-                            @Override
-                            public void onHttpSuccess(PagerBean<SysUserResponseVo> result) {
-                                startActivity(new Intent(DaggerActivity.this, MainActivity.class));
-                                AppManagers.getActivitiesManager().finishActivity(DaggerActivity.this);
-                            }
+                .subscribe(aVoid -> {
+                    login.setUser(username.getText().toString(), password.getText().toString(),
+                            "e3225cc1-eba7-4993-93f9-63044d4ee540",
+                            AppUtil.getPackageInfo(DaggerActivity.this).versionName, 2);
+                    htttpRequest(AppManagers.getHttpManager().login( false, login,
+                            new HttpRequest<PagerBean<SysUserResponseVo>>() {
+                        @Override
+                        public void onHttpSuccess(PagerBean<SysUserResponseVo> result) {
+                            startActivity(new Intent(DaggerActivity.this, MainActivity.class));
+                            AppManagers.getActivitiesManager().finishActivity(DaggerActivity.this);
+                        }
 
-                            @Override
-                            public void onHttpError() {
+                        @Override
+                        public void onHttpError() {
 
-                            }
-                        }));
-                    }
+                        }
+
+                    }));
                 });
         my_image_view.setImageURI("http://img2.3lian.com/2014/f2/37/d/40.jpg");
     }

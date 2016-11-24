@@ -26,7 +26,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import rx.functions.Action1;
 
 public class MVPActivity extends BaseActivity implements LoginView{
 
@@ -61,32 +60,23 @@ public class MVPActivity extends BaseActivity implements LoginView{
         edit_account_number.setText("15892");
         edit_account_psd.setText("123456");
         RxTextView.textChanges(edit_account_number)
-                .subscribe(new Action1<CharSequence>() {
-                    @Override
-                    public void call(CharSequence charSequence) {
-                        loginPresenter.checkInput(charSequence.toString(),
-                                edit_account_psd.getText().toString());
-                    }
+                .subscribe(charSequence -> {
+                    loginPresenter.checkInput(charSequence.toString(),
+                            edit_account_psd.getText().toString());
                 });
 
         RxTextView.textChanges(edit_account_psd)
-                .subscribe(new Action1<CharSequence>() {
-                    @Override
-                    public void call(CharSequence charSequence) {
-                        loginPresenter.checkInput(edit_account_number.getText().toString(),
-                                charSequence.toString());
-                    }
+                .subscribe(charSequence -> {
+                    loginPresenter.checkInput(edit_account_number.getText().toString(),
+                            charSequence.toString());
                 });
         RxView.clicks(btn_login_commit).throttleFirst(500, TimeUnit.MILLISECONDS)
-                .subscribe(new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        login.setUser(edit_account_number.getText().toString(),
-                                edit_account_psd.getText().toString(),
-                                "e3225cc1-eba7-4993-93f9-63044d4ee540",
-                                AppUtil.getPackageInfo(MVPActivity.this).versionName, 2);
-                        htttpRequest(loginPresenter.login(MVPActivity.this, login));
-                    }
+                .subscribe(aVoid -> {
+                    login.setUser(edit_account_number.getText().toString(),
+                            edit_account_psd.getText().toString(),
+                            "e3225cc1-eba7-4993-93f9-63044d4ee540",
+                            AppUtil.getPackageInfo(MVPActivity.this).versionName, 2);
+                    htttpRequest(loginPresenter.login(login));
                 });
 
         DraweeController controller = Fresco.newDraweeControllerBuilder()

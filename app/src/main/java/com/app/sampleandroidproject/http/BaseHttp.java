@@ -40,7 +40,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 import static com.app.sampleandroidproject.app.Constants.MULTIPART;
@@ -115,18 +114,15 @@ public class BaseHttp {
     private <T> Subscription httpResult(Observable<ModleBean<T>> observable, final Subscriber<T> subscriber) {
 
         return observable
-                .observeOn(Schedulers.io())
-                .map(new Func1<ModleBean<T>, T>() {
-                    @Override
-                    public T call(ModleBean<T> modleBean) {
-                        if (!modleBean.success && !TextUtils.isEmpty(modleBean.msg)) {
-                            subscriber.onError(new Error(modleBean.msg));
-                        }
-                        return modleBean.pager;
-                    }
-                })
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
+                .map(modleBean -> {
+                    if (!modleBean.success && !TextUtils.isEmpty(modleBean.msg)) {
+                        subscriber.onError(new Error(modleBean.msg));
+                    }
+                    return modleBean.pager;
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }

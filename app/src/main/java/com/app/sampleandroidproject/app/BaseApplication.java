@@ -41,9 +41,17 @@ public class BaseApplication extends MultiDexApplication {
         LeakCanary.install(this);
         BusProvider.register(this);
         AppManagers.getAppManagers(this);
-        Fresco.initialize(this, ImagePipelineConfigFactory.getOkHttpImagePipelineConfig(this));
-        appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+        initFresco();
         initLogger();
+        initAppComponent();
+    }
+
+    private void initAppComponent() {
+        appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+    }
+
+    private void initFresco() {
+        Fresco.initialize(this, ImagePipelineConfigFactory.getOkHttpImagePipelineConfig(this));
     }
 
     private void initLogger() {

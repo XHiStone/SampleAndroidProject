@@ -1,6 +1,5 @@
 package com.app.sampleandroidproject.ui.login.mvp;
 
-import android.content.Context;
 import android.text.TextUtils;
 
 import com.app.sampleandroidproject.app.AppManagers;
@@ -32,7 +31,7 @@ public class LoginPresenter {
         loginView.canLogin(!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password));
     }
 
-    public Subscription login(Context context, LoginRequest login) {
+    public Subscription login(LoginRequest login) {
         return AppManagers.getHttpManager().login(false, login, new HttpRequest<PagerBean<SysUserResponseVo>>() {
 
             @Override

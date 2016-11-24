@@ -22,7 +22,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.BindViews;
-import rx.functions.Action1;
+import rx.Observable;
 
 public class GreenDaoActivity extends BaseActivity {
     @Inject
@@ -53,81 +53,71 @@ public class GreenDaoActivity extends BaseActivity {
 
     private void initData() {
         RxView.clicks(buttons.get(0)).throttleFirst(500, TimeUnit.MILLISECONDS)
-                .subscribe(new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        htttpRequest(AppManagers.getHttpManager().login(false, login, new HttpRequest<PagerBean<SysUserResponseVo>>() {
-                            @Override
-                            public void onHttpSuccess(PagerBean<SysUserResponseVo> result) {
-                                user = result.content.get(0);
-                            }
-
-                            @Override
-                            public void onHttpError() {
-
-                            }
-                        }));
-                        if (user != null) {
-                            user.setId(null);
-                            AppManagers.getDbManagers().insertUser(user);
-//                            AppManagers.getToastor().showSingletonToast(
-//                                    AppManagers.getDbManagers().usersCount()
-//                            );
-                            addText();
+                .subscribe(aVoid -> {
+                    htttpRequest(AppManagers.getHttpManager().login(false, login, new HttpRequest<PagerBean<SysUserResponseVo>>() {
+                        @Override
+                        public void onHttpSuccess(PagerBean<SysUserResponseVo> result) {
+                            user = result.content.get(0);
+                            Observable.just(user)
+                                    .filter(sysUserResponseVo -> sysUserResponseVo != null)
+                                    .subscribe(sysUserResponseVo -> {
+                                        sysUserResponseVo.setId(null);
+                                        AppManagers.getDbManagers().insertUser(user);
+                                        toastor.showSingleLongToast(AppManagers.getDbManagers().usersCount());
+                                        addText();
+                                    });
                         }
-                    }
+
+                        @Override
+                        public void onHttpError() {
+
+                        }
+                    }));
                 });
         RxView.clicks(buttons.get(1)).throttleFirst(500, TimeUnit.MILLISECONDS)
-                .subscribe(new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        htttpRequest(AppManagers.getHttpManager().login( false, login, new HttpRequest<PagerBean<SysUserResponseVo>>() {
-                            @Override
-                            public void onHttpSuccess(PagerBean<SysUserResponseVo> result) {
-                                user = result.content.get(0);
-                            }
-
-                            @Override
-                            public void onHttpError() {
-
-                            }
-                        }));
-                        List<SysUserResponseVo> users = AppManagers.getDbManagers().queryUser();
-                        if (users.size() > 0) {
-                            SysUserResponseVo user = users.get(0);
-                            final Long id = user.getId();
-                            AppManagers.getDbManagers().deleteUser(id);
+                .subscribe(aVoid -> {
+                    htttpRequest(AppManagers.getHttpManager().login(false, login, new HttpRequest<PagerBean<SysUserResponseVo>>() {
+                        @Override
+                        public void onHttpSuccess(PagerBean<SysUserResponseVo> result) {
+                            user = result.content.get(0);
                         }
-                        addText();
-                    }
+
+                        @Override
+                        public void onHttpError() {
+
+                        }
+                    }));
+                    List<SysUserResponseVo> users = AppManagers.getDbManagers().queryUser();
+                    Observable.just(users).filter(sysUserResponseVos -> sysUserResponseVos.size() > 0)
+                            .subscribe(sysUserResponseVos -> {
+                                SysUserResponseVo user1 = sysUserResponseVos.get(0);
+                                final Long id = user1.getId();
+                                AppManagers.getDbManagers().deleteUser(id);
+                            });
+                    addText();
                 });
         RxView.clicks(buttons.get(2)).throttleFirst(500, TimeUnit.MILLISECONDS)
-                .subscribe(new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        List<SysUserResponseVo> users = AppManagers.getDbManagers().queryUser();
-                        for (SysUserResponseVo user : users) {
-                            user.setUserName("李二虎");
-                            AppManagers.getDbManagers().upUser(user);
-                        }
-                        addText();
-                    }
+                .subscribe(aVoid -> {
+                    List<SysUserResponseVo> users = AppManagers.getDbManagers().queryUser();
+                    Observable.from(users).subscribe(user12 -> {
+                        user12.setUserName("李二虎");
+                        AppManagers.getDbManagers().upUser(user12);
+                    });
+                    addText();
                 });
         RxView.clicks(buttons.get(3)).throttleFirst(500, TimeUnit.MILLISECONDS)
-                .subscribe(new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        addText();
-                    }
+                .subscribe(aVoid -> {
+                    addText();
                 });
     }
 
     private void addText() {
         text_db_content.setText("");
         List<SysUserResponseVo> users = AppManagers.getDbManagers().queryUser();
-        for (int i = 0; i < users.size(); i++) {
-            text_db_content.append(users.get(i).userName + ":" + users.get(i).deptName + "-" + users.get(i).postName + "-id-" + users.get(i).getId() + "\n");
-        }
+        Observable.from(users).subscribe(sysUserResponseVo -> {
+            text_db_content.append(sysUserResponseVo.userName + ":" + sysUserResponseVo.deptName
+                    + "-" + sysUserResponseVo.postName + "-id-" + sysUserResponseVo.getId() + "\n");
+        });
     }
 
     @Override
