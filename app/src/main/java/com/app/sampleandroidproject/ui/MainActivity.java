@@ -70,11 +70,11 @@ public class MainActivity extends BaseActivity {
         listView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
         RxAdapterView.itemClicks(listView).throttleFirst(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.newThread())
-                .map((Func1) (integer) -> ClassEnum.valueOf((Integer) integer))
+                .map((Func1<Integer, Class<?>>) integer -> ClassEnum.valueOf(integer))
+                .filter(aClass -> aClass != null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aClass -> {
-                    if (aClass != null)
-                        startActivity(new Intent(MainActivity.this, (Class<?>) aClass));
+                    startActivity(new Intent(MainActivity.this, aClass));
                 });
 
 
