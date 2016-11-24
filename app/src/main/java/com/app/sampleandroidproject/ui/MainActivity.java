@@ -60,12 +60,18 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+
         names = new String[]{
-                "DaggerActivity", "MVPActivity", "GreenDaoActivity", "RxDaoActivity", "recycleViewWithDragActivity"
+                "DaggerActivity",
+                "MVPActivity",
+                "GreenDaoActivity",
+                "RxDaoActivity",
+                "recycleViewWithDragActivity"
         };
 
         ArrayAdapter adapter = new ArrayAdapter(this,
                 android.R.layout.simple_expandable_list_item_1, Arrays.asList(names));
+
         listView.setAdapter(adapter);
         listView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
         RxAdapterView.itemClicks(listView).throttleFirst(500, TimeUnit.MILLISECONDS)
