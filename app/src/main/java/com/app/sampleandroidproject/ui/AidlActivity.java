@@ -85,11 +85,13 @@ public class AidlActivity extends BaseActivity implements ServiceConnection {
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
+        //实现接口
         stub = IBaseAidlInterface.Stub.asInterface(service);
     }
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
-
+        //滞空接口，防止内存溢出
+        stub = null;
     }
 }
