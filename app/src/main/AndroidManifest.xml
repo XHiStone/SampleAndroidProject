@@ -39,6 +39,14 @@
         <activity android:name=".ui.GreenDaoActivity" />
         <activity android:name=".ui.rxexample.RxDaoActivity" />
         <activity android:name=".ui.recycleview.RecycleViewWithDragActivity" />
+
+        <service
+            android:name=".service.IBaseService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
+
+        <activity android:name=".ui.AidlActivity"></activity>
     </application>
 
 </manifest>

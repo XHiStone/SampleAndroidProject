@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.view.View;
 
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
@@ -11,6 +12,21 @@ import java.util.regex.Pattern;
 
 public class BaseTools {
     public static Dialog dialog;
+
+    /**
+     * @return void
+     * @Title: setFullWindow
+     * @Description: (Activity沉溺式全屏SystemBar)
+     * @params [activity]
+     */
+    public final static void setFullWindow(Activity activity) {
+        View mDecorView = activity.getWindow().getDecorView();
+        mDecorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
 
     /**
      * 获取屏幕【宽度】的像素数

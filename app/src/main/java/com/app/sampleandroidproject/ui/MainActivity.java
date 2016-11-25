@@ -40,6 +40,7 @@ public class MainActivity extends BaseActivity {
     protected void startWork(Bundle savedInstanceState) {
         setTittleText("首页");
         initData();
+
     }
 
     @Override
@@ -48,6 +49,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initData() {
+
         AppManagers.getHttpManager().getCity(false, new HttpRequest<HttpResultCityAndSpace>() {
 
             @Override
@@ -66,7 +68,8 @@ public class MainActivity extends BaseActivity {
                 "MVPActivity",
                 "GreenDaoActivity",
                 "RxDaoActivity",
-                "recycleViewWithDragActivity"
+                "recycleViewWithDragActivity",
+                "AIDLActivity"
         };
 
         ArrayAdapter adapter = new ArrayAdapter(this,
@@ -74,6 +77,7 @@ public class MainActivity extends BaseActivity {
 
         listView.setAdapter(adapter);
         listView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
+
         RxAdapterView.itemClicks(listView).throttleFirst(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.newThread())
                 .map((Func1<Integer, Class<?>>) integer -> ClassEnum.valueOf(integer))

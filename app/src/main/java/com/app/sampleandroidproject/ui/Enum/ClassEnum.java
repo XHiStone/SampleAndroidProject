@@ -1,5 +1,6 @@
 package com.app.sampleandroidproject.ui.Enum;
 
+import com.app.sampleandroidproject.ui.AidlActivity;
 import com.app.sampleandroidproject.ui.DaggerActivity;
 import com.app.sampleandroidproject.ui.GreenDaoActivity;
 import com.app.sampleandroidproject.ui.MVPActivity;
@@ -30,6 +31,8 @@ public class ClassEnum {
                 return RxDaoActivity.class;
             case 4:
                 return RecycleViewWithDragActivity.class;
+            case 5:
+                return AidlActivity.class;
             default:
                 return null;
         }
