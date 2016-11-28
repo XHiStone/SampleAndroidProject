@@ -5,15 +5,18 @@ import android.support.multidex.MultiDexApplication;
 import com.app.sampleandroidproject.app.dagger.AppComponent;
 import com.app.sampleandroidproject.app.dagger.AppModule;
 import com.app.sampleandroidproject.app.dagger.DaggerAppComponent;
+import com.app.sampleandroidproject.event.FEvent;
 import com.app.sampleandroidproject.ui.login.dagger.LoginComponent;
 import com.app.sampleandroidproject.ui.login.dagger.LoginModule;
 import com.app.sampleandroidproject.utils.BusProvider;
 import com.app.sampleandroidproject.utils.ImagePipelineConfigFactory;
 import com.app.sampleandroidproject.view.LoginView;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.otto.Subscribe;
-import com.orhanobut.logger.Logger;
+
+import static com.app.sampleandroidproject.R.mipmap.error;
 
 /**
  * SampleAndroidProject
@@ -63,9 +66,9 @@ public class BaseApplication extends MultiDexApplication {
     }
 
     @Subscribe
-    public void callback(String error) {
-        if (error != null) {
-            AppManagers.getToastor().showSingletonToast(error);
+    public void callback(FEvent event) {
+        if (event != null) {
+            AppManagers.getToastor().showSingletonToast(event.error);
         }
     }
 

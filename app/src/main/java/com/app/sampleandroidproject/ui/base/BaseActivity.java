@@ -27,11 +27,11 @@ import com.app.sampleandroidproject.utils.Toastor;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * SampleAndroidProject
@@ -42,7 +42,7 @@ import rx.Subscription;
  * @Description:
  */
 public abstract class BaseActivity extends AppCompatActivity implements RequestManager.OnRequestListener{
-    private List<Subscription> subscriptions = new ArrayList<>();
+    private CompositeSubscription subscriptions = new CompositeSubscription();
     private TextView tittle_text;
     private FragmentManager fragmentManager;
     private ProgressDialog progressDialog;
@@ -149,11 +149,6 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestM
         if (fragments != null && fragments.size() != 0) {
             for (Fragment fragment : fragments) fragment = null;
         }
-        for (int i = 0; i < subscriptions.size(); i++) {
-            if (!subscriptions.get(i).isUnsubscribed()) {
-                subscriptions.get(i).unsubscribe();
-            }
-        }
         subscriptions.clear();
         AppManagers.getActivitiesManager().removeActivity(this);
         stopWork();
@@ -210,12 +205,7 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestM
             leftImg.setVisibility(visibility);
             leftTv.setVisibility(visibility);
         }
-        leftClick = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        };
+        leftClick = v -> onBackPressed();
         leftTv.setOnClickListener(leftClick);
         leftImg.setOnClickListener(leftClick);
     }

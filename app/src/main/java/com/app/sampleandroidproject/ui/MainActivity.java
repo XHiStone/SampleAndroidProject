@@ -86,8 +86,6 @@ public class MainActivity extends BaseActivity {
                 .subscribe(aClass -> {
                     startActivity(new Intent(MainActivity.this, aClass));
                 });
-
-
     }
 
     @Override
