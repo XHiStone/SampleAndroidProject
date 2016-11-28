@@ -26,6 +26,7 @@ import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
 
+
     @BindView(R.id.listView)
     ListView listView;
 
@@ -69,7 +70,8 @@ public class MainActivity extends BaseActivity {
                 "GreenDaoActivity",
                 "RxDaoActivity",
                 "recycleViewWithDragActivity",
-                "AIDLActivity"
+                "AIDLActivity",
+                "SVGActivity"
         };
 
         ArrayAdapter adapter = new ArrayAdapter(this,
@@ -105,4 +107,5 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
         toastor.showSingletonToast("Main");
     }
+
 }

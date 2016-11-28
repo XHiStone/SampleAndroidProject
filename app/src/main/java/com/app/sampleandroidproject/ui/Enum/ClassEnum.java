@@ -6,6 +6,7 @@ import com.app.sampleandroidproject.ui.GreenDaoActivity;
 import com.app.sampleandroidproject.ui.MVPActivity;
 import com.app.sampleandroidproject.ui.recycleview.RecycleViewWithDragActivity;
 import com.app.sampleandroidproject.ui.rxexample.RxDaoActivity;
+import com.app.sampleandroidproject.ui.rxexample.SVGActivity;
 
 /**
  * SampleAndroidProject
@@ -33,6 +34,8 @@ public class ClassEnum {
                 return RecycleViewWithDragActivity.class;
             case 5:
                 return AidlActivity.class;
+            case 6:
+                return SVGActivity.class;
             default:
                 return null;
         }

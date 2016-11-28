@@ -46,7 +46,8 @@
             android:exported="true"
             android:process=":remote" />
 
-        <activity android:name=".ui.AidlActivity"></activity>
+        <activity android:name=".ui.AidlActivity" />
+        <activity android:name=".ui.rxexample.SVGActivity"></activity>
     </application>
 
 </manifest>
