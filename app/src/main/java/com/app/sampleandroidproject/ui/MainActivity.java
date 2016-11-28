@@ -108,4 +108,5 @@ public class MainActivity extends BaseActivity {
         toastor.showSingletonToast("Main");
     }
 
+
 }

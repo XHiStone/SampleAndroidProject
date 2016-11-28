@@ -4,9 +4,9 @@ import com.app.sampleandroidproject.ui.AidlActivity;
 import com.app.sampleandroidproject.ui.DaggerActivity;
 import com.app.sampleandroidproject.ui.GreenDaoActivity;
 import com.app.sampleandroidproject.ui.MVPActivity;
+import com.app.sampleandroidproject.ui.SVGActivity;
 import com.app.sampleandroidproject.ui.recycleview.RecycleViewWithDragActivity;
 import com.app.sampleandroidproject.ui.rxexample.RxDaoActivity;
-import com.app.sampleandroidproject.ui.rxexample.SVGActivity;
 
 /**
  * SampleAndroidProject

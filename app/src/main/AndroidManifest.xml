@@ -27,6 +27,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <service
+            android:name=".service.IBaseService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
+
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,15 +46,8 @@
         <activity android:name=".ui.GreenDaoActivity" />
         <activity android:name=".ui.rxexample.RxDaoActivity" />
         <activity android:name=".ui.recycleview.RecycleViewWithDragActivity" />
-
-        <service
-            android:name=".service.IBaseService"
-            android:enabled="true"
-            android:exported="true"
-            android:process=":remote" />
-
         <activity android:name=".ui.AidlActivity" />
-        <activity android:name=".ui.rxexample.SVGActivity"></activity>
+        <activity android:name=".ui.SVGActivity" />
     </application>
 
 </manifest>
