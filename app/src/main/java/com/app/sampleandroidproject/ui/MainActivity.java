@@ -15,17 +15,14 @@ import com.app.sampleandroidproject.ui.Enum.ClassEnum;
 import com.app.sampleandroidproject.ui.base.BaseActivity;
 import com.jakewharton.rxbinding.widget.RxAdapterView;
 import com.orhanobut.logger.Logger;
-
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
-
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
-
 
     @BindView(R.id.listView)
     ListView listView;
