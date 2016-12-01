@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
@@ -26,6 +27,16 @@ public class BaseTools {
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
                 View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
+    /**
+     * @Title: hideStatusBar
+     * @Description:  (4.0前方法，隐藏statusBar，但无法隐藏4.0后引入的NavingationBar)
+     *@params []
+     * @return void
+     */
+    public final static void hideStatusBar(Activity activity){
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     /**

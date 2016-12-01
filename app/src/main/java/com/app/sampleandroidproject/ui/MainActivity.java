@@ -4,10 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.app.sampleandroidproject.R;
+import com.app.sampleandroidproject.adapter.listview.base.CommonAdapter;
+import com.app.sampleandroidproject.adapter.listview.base.baseItem.ViewHolder;
 import com.app.sampleandroidproject.app.AppManagers;
 import com.app.sampleandroidproject.beans.result.HttpResultCityAndSpace;
 import com.app.sampleandroidproject.http.HttpRequest;
@@ -15,8 +16,10 @@ import com.app.sampleandroidproject.ui.Enum.ClassEnum;
 import com.app.sampleandroidproject.ui.base.BaseActivity;
 import com.jakewharton.rxbinding.widget.RxAdapterView;
 import com.orhanobut.logger.Logger;
+
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -68,13 +71,28 @@ public class MainActivity extends BaseActivity {
                 "RxDaoActivity",
                 "recycleViewWithDragActivity",
                 "AIDLActivity",
-                "SVGActivity"
+                "SVGActivity",
+                "MultiItemActivity",
+                "SwipeRefreshActivity"
         };
 
-        ArrayAdapter adapter = new ArrayAdapter(this,
-                android.R.layout.simple_expandable_list_item_1, Arrays.asList(names));
+//        ArrayAdapter adapter = new ArrayAdapter(this,
+//                android.R.layout.simple_expandable_list_item_1, Arrays.asList(names));
 
-        listView.setAdapter(adapter);
+        listView.setAdapter(new CommonAdapter<String>(this,
+                android.R.layout.simple_expandable_list_item_1, Arrays.asList(names)) {
+            @Override
+            protected void convert(ViewHolder holder, String item, int position) {
+                holder.setText(android.R.id.text1, item);
+            }
+
+            @Override
+            public void onViewHolderCreated(ViewHolder holder, View itemView) {
+                super.onViewHolderCreated(holder, itemView);
+
+            }
+        });
+
         listView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
 
         RxAdapterView.itemClicks(listView).throttleFirst(500, TimeUnit.MILLISECONDS)

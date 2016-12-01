@@ -63,6 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestM
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         fragmentManager = getSupportFragmentManager();
         AppManagers.getActivitiesManager().addActivity(this);
         super.onCreate(savedInstanceState);
@@ -76,6 +77,22 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestM
         toastor = AppManagers.getToastor();
         AppManagers.getRequestManager().addOnRequestListener(this);
         startWork(savedInstanceState);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus&&Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            View mDecorView = getWindow().getDecorView();
+            mDecorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    |View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    |View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    |View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    |View.SYSTEM_UI_FLAG_FULLSCREEN
+
+            );
+        }
     }
 
     @Override

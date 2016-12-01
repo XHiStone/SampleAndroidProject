@@ -5,8 +5,10 @@ import com.app.sampleandroidproject.ui.DaggerActivity;
 import com.app.sampleandroidproject.ui.GreenDaoActivity;
 import com.app.sampleandroidproject.ui.MVPActivity;
 import com.app.sampleandroidproject.ui.SVGActivity;
+import com.app.sampleandroidproject.ui.multiitem.MultiItemActivity;
 import com.app.sampleandroidproject.ui.recycleview.RecycleViewWithDragActivity;
 import com.app.sampleandroidproject.ui.rxexample.RxDaoActivity;
+import com.app.sampleandroidproject.ui.swiperefresh.SwipeRefreshActivity;
 
 /**
  * SampleAndroidProject
@@ -36,6 +38,10 @@ public class ClassEnum {
                 return AidlActivity.class;
             case 6:
                 return SVGActivity.class;
+            case 7:
+                return MultiItemActivity.class;
+            case 8:
+                return SwipeRefreshActivity.class;
             default:
                 return null;
         }
