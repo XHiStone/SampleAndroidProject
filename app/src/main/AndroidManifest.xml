@@ -48,7 +48,8 @@
         <activity android:name=".ui.AidlActivity" />
         <activity android:name=".ui.SVGActivity" />
         <activity android:name=".ui.multiitem.MultiItemActivity" />
-        <activity android:name=".ui.swiperefresh.SwipeRefreshActivity"></activity>
+        <activity android:name=".ui.swiperefresh.SwipeRefreshActivity" />
+        <activity android:name=".ui.RetrofitDownLoadActivity"/>
     </application>
 
 </manifest>

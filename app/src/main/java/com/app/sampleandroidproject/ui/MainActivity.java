@@ -73,7 +73,8 @@ public class MainActivity extends BaseActivity {
                 "AIDLActivity",
                 "SVGActivity",
                 "MultiItemActivity",
-                "SwipeRefreshActivity"
+                "SwipeRefreshActivity",
+                "RetrofitDownload"
         };
 
 //        ArrayAdapter adapter = new ArrayAdapter(this,

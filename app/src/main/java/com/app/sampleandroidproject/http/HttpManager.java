@@ -6,10 +6,12 @@ import com.app.sampleandroidproject.beans.result.HttpResultCityAndSpace;
 import com.app.sampleandroidproject.beans.result.PullImgResult;
 import com.app.sampleandroidproject.beans.result.SysUserBean;
 import com.app.sampleandroidproject.beans.result.SysUserResponseVo;
+import com.app.sampleandroidproject.http.download.DownloadProgressListener;
 
 import java.io.File;
 import java.util.List;
 
+import rx.Subscriber;
 import rx.Subscription;
 
 
@@ -53,5 +55,12 @@ public class HttpManager extends BaseHttp {
     public Subscription pullImg(String userId, List<File> photoList, boolean isCach, HttpRequest<PullImgResult> httpRequest) {
         return httpRequest(isCach).dispachHttp(pull(userId, photoList), httpRequest);
     }
+
+
+    public Subscription downLoadApk( String url, File file, DownloadProgressListener listener, Subscriber observer) {
+        return httpRequest(listener).dispathDownLoad(downLoadApi.downLoadApk(url),file,observer);
+    }
+
+
 
 }
