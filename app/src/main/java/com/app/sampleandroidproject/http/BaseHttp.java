@@ -9,7 +9,10 @@ import com.app.sampleandroidproject.app.BaseApplication;
 import com.app.sampleandroidproject.app.Constants;
 import com.app.sampleandroidproject.beans.ModleBean;
 import com.app.sampleandroidproject.event.FEvent;
+import com.app.sampleandroidproject.http.download.DownloadProgressInterceptor;
+import com.app.sampleandroidproject.http.download.DownloadProgressListener;
 import com.app.sampleandroidproject.utils.BusProvider;
+import com.app.sampleandroidproject.utils.FileTools;
 import com.app.sampleandroidproject.utils.MaitianErrorHandler;
 import com.app.sampleandroidproject.utils.fastjson.FastJsonConverterFactory;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -17,6 +20,8 @@ import com.google.gson.JsonSyntaxException;
 
 import java.io.EOFException;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InterruptedIOException;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
@@ -29,9 +34,11 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.HttpException;
@@ -40,6 +47,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 import static com.app.sampleandroidproject.app.Constants.MULTIPART;
@@ -58,6 +66,7 @@ import static com.app.sampleandroidproject.app.Constants.PULL_IMG_PR;
 
 public class BaseHttp {
     protected HttpApi api;
+    protected  DownLoadApi downLoadApi;
 
     protected final static Map<String, String> keys = new HashMap<>();
     protected final String TOKEN = "token";
@@ -81,7 +90,7 @@ public class BaseHttp {
         return RequestBody.create(MediaType.parse(MULTIPART), body);
     }
 
-    private OkHttpClient _createClient(Map<String, String> headers, boolean isCach) {
+    private OkHttpClient _createClient(Map<String, String> headers, Interceptor interceptor, boolean isCach) {
 
         if (builder == null) {
             builder = new OkHttpClient.Builder();
@@ -107,6 +116,9 @@ public class BaseHttp {
         } else {
             httpInterceptor = new HttpInterceptor(headers);
             builder.addInterceptor(httpInterceptor);
+        }
+        if(interceptor!=null){
+            builder.addInterceptor(interceptor);
         }
         return builder.build();
     }
@@ -181,7 +193,7 @@ public class BaseHttp {
     }
 
 
-    protected <T> T createService(Class<T> clazz, Map<String, String> headers, String baseURL, boolean isCach) {
+    protected <T> T createService(Class<T> clazz, Map<String, String> headers, String baseURL, Interceptor interceptor, boolean isCach) {
 
         if (TextUtils.isEmpty(baseURL)) {
             throw new IllegalArgumentException("HttpManager-->createService >>> baseURL can not be empty");
@@ -201,7 +213,7 @@ public class BaseHttp {
                     .addConverterFactory(FastJsonConverterFactory.create())
                     .baseUrl(baseURL);
 
-        rBuilder.client(_createClient(headers, isCach));
+        rBuilder.client(_createClient(headers,interceptor, isCach));
 
         return rBuilder.build().create(clazz);
     }
@@ -214,9 +226,14 @@ public class BaseHttp {
      * @params [context, isCach, firstCach]
      */
     protected BaseHttp httpRequest(boolean isCach) {
-        api = createService(HttpApi.class, null, Constants.BASEURL, isCach);
+        api = createService(HttpApi.class, null, Constants.BASEURL,null, isCach);
         if (!TextUtils.isEmpty(AppManagers.getTokenUtil().getToken()) && keys.size() == 0)
             keys.put(TOKEN, AppManagers.getTokenUtil().getToken());
+        return this;
+    }
+
+    protected BaseHttp httpRequest(DownloadProgressListener listener) {
+        downLoadApi  = createService(DownLoadApi.class, null, Constants.BASEURL,new DownloadProgressInterceptor(listener), false);
         return this;
     }
 
@@ -249,6 +266,31 @@ public class BaseHttp {
                 httpRequest.onHttpSuccess(t);
             }
         });
+    }
+
+    public <E extends ResponseBody> Subscription dispathDownLoad(Observable<E> ob, final File file, Subscriber observer) {
+
+        if (ob == null) {
+            throw new IllegalArgumentException("HttpManager: dispath >>> Observable can not be null");
+        }
+        return ob.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .map(new Func1<ResponseBody, InputStream>() {
+                    @Override
+                    public InputStream call(ResponseBody responseBody) {
+                        return responseBody.byteStream();
+                    }
+                })
+                .observeOn(Schedulers.computation())
+                .doOnNext(inputStream -> {
+                    try {
+                        FileTools.writeFile(inputStream, file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
     }
 
     protected Observable pull(String userId, List<File> photoList) {
