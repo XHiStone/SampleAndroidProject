@@ -16,29 +16,29 @@ import java.util.Map;
 public class MaitianErrorHandler {
 
     // ---- Http ----
-    private static final String MSG_NET_EOF = BaseApplication.getInstance().getString(R.string.msg_net_eof);
-    private static final String MSG_NET_OFF = BaseApplication.getInstance().getString(R.string.msg_net_off);
-    private static final String MSG_SOCKET_TIME_OUT = BaseApplication.getInstance().getString(R.string.msg_socket_timeout);
-    private static final String MSG_CONN_TIME_OUT = BaseApplication.getInstance().getString(R.string.msg_connection_timeout);
-    private static final String MSG_CHECK_NET = BaseApplication.getInstance().getString(R.string.msg_check_net);
-    private static final String MSG_NONE_ERROR = BaseApplication.getInstance().getString(R.string.msg_none_error);
-    private static final String MSG_BAD_REQUEST = BaseApplication.getInstance().getString(R.string.msg_bad_request);
-    private static final String MSG_UNKNOWNS_HOST = BaseApplication.getInstance().getString(R.string.msg_unknow_host);
-    private static final String MSG_SYNTAX_ERROR = BaseApplication.getInstance().getString(R.string.msg_syntax_error);
-    private static final String MSG_CLIENT_ERROR = BaseApplication.getInstance().getString(R.string.msg_client_error);
-    private static final String MSG_SERVER_ERROR = BaseApplication.getInstance().getString(R.string.msg_server_error);
-    private static final String MSG_CONNECT_ERROR = BaseApplication.getInstance().getString(R.string.msg_connect_error);
-    private static final String MSG_PERMISSION_DENY = BaseApplication.getInstance().getString(R.string.msg_perssion_deny);
-    private static final String MSG_CLIENT_TIMEOUT = BaseApplication.getInstance().getString(R.string.msg_client_timeout);
-    private static final String MSG_GATEWAY_TIMEOUT = BaseApplication.getInstance().getString(R.string.msg_gateway_timeout);
+    private static final String MSG_NET_EOF = BaseApplication.getContext().getString(R.string.msg_net_eof);
+    private static final String MSG_NET_OFF = BaseApplication.getContext().getString(R.string.msg_net_off);
+    private static final String MSG_SOCKET_TIME_OUT = BaseApplication.getContext().getString(R.string.msg_socket_timeout);
+    private static final String MSG_CONN_TIME_OUT = BaseApplication.getContext().getString(R.string.msg_connection_timeout);
+    private static final String MSG_CHECK_NET = BaseApplication.getContext().getString(R.string.msg_check_net);
+    private static final String MSG_NONE_ERROR = BaseApplication.getContext().getString(R.string.msg_none_error);
+    private static final String MSG_BAD_REQUEST = BaseApplication.getContext().getString(R.string.msg_bad_request);
+    private static final String MSG_UNKNOWNS_HOST = BaseApplication.getContext().getString(R.string.msg_unknow_host);
+    private static final String MSG_SYNTAX_ERROR = BaseApplication.getContext().getString(R.string.msg_syntax_error);
+    private static final String MSG_CLIENT_ERROR = BaseApplication.getContext().getString(R.string.msg_client_error);
+    private static final String MSG_SERVER_ERROR = BaseApplication.getContext().getString(R.string.msg_server_error);
+    private static final String MSG_CONNECT_ERROR = BaseApplication.getContext().getString(R.string.msg_connect_error);
+    private static final String MSG_PERMISSION_DENY = BaseApplication.getContext().getString(R.string.msg_perssion_deny);
+    private static final String MSG_CLIENT_TIMEOUT = BaseApplication.getContext().getString(R.string.msg_client_timeout);
+    private static final String MSG_GATEWAY_TIMEOUT = BaseApplication.getContext().getString(R.string.msg_gateway_timeout);
 
     // ---- Download ----
-    private static final String MSG_DOWNLOAD_ENTITY = BaseApplication.getInstance().getString(R.string.msg_download_entity);
-    private static final String MSG_DOWNLOAD_URL = BaseApplication.getInstance().getString(R.string.msg_download_url);
+    private static final String MSG_DOWNLOAD_ENTITY = BaseApplication.getContext().getString(R.string.msg_download_entity);
+    private static final String MSG_DOWNLOAD_URL = BaseApplication.getContext().getString(R.string.msg_download_url);
 
     // ---- Database ----
-    private static final String MSG_DB_CREATE_FAILURE = BaseApplication.getInstance().getString(R.string.msg_db_create_failure);
-    private static final String MSG_DB_DELETE_FAILURE = BaseApplication.getInstance().getString(R.string.msg_db_delete_failure);
+    private static final String MSG_DB_CREATE_FAILURE = BaseApplication.getContext().getString(R.string.msg_db_create_failure);
+    private static final String MSG_DB_DELETE_FAILURE = BaseApplication.getContext().getString(R.string.msg_db_delete_failure);
 
     public static Map<String, String> EMS = new HashMap<>();
 
