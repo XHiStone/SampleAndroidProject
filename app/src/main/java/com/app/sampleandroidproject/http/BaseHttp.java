@@ -107,9 +107,9 @@ public class BaseHttp {
         builder.writeTimeout(Constants.HTTP_CONNECTTIME, TimeUnit.SECONDS);
         if (isCach) {
             if (cache == null) {
-                httpCachInterceptor = new HttpCachInterceptor(BaseApplication.getInstance());
+                httpCachInterceptor = new HttpCachInterceptor(BaseApplication.getContext());
                 builder.addInterceptor(httpCachInterceptor);
-                File cacheFile = new File(BaseApplication.getInstance().getCacheDir(), Constants.HTTP_CACHFILENAME);
+                File cacheFile = new File(BaseApplication.getContext().getCacheDir(), Constants.HTTP_CACHFILENAME);
                 cache = new Cache(cacheFile, Constants.HTTP_CACHSIZE);
             }
             builder.cache(cache);
