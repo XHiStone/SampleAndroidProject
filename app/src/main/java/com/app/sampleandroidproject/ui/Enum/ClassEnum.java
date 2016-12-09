@@ -4,6 +4,7 @@ import com.app.sampleandroidproject.ui.AidlActivity;
 import com.app.sampleandroidproject.ui.DaggerActivity;
 import com.app.sampleandroidproject.ui.GreenDaoActivity;
 import com.app.sampleandroidproject.ui.MVPActivity;
+import com.app.sampleandroidproject.ui.RetrofitDownLoadActivity;
 import com.app.sampleandroidproject.ui.SVGActivity;
 import com.app.sampleandroidproject.ui.multiitem.MultiItemActivity;
 import com.app.sampleandroidproject.ui.recycleview.RecycleViewWithDragActivity;
@@ -42,6 +43,8 @@ public class ClassEnum {
                 return MultiItemActivity.class;
             case 8:
                 return SwipeRefreshActivity.class;
+            case 9:
+                return RetrofitDownLoadActivity.class;
             default:
                 return null;
         }

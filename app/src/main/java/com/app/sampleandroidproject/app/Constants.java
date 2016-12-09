@@ -20,7 +20,7 @@ public class Constants {
 
 
     //-------debug和缓存---------
-    public static final Boolean HTTP_DEBUG = true;
+    public static final Boolean HTTP_DEBUG = false;
     public static final int HTTP_CACHSIZE = 10 * 1024 * 1024;  //设置缓存 10M
     public static final String HTTP_CACHFILENAME = "httpCache";
     public static final int HTTP_CONNECTTIME = 10; //秒
