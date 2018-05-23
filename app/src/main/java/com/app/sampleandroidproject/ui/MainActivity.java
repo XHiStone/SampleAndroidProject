@@ -74,7 +74,8 @@ public class MainActivity extends BaseActivity {
                 "SVGActivity",
                 "MultiItemActivity",
                 "SwipeRefreshActivity",
-                "RetrofitDownload"
+                "RetrofitDownload",
+                "MultiRecycleActivity"
         };
 
 //        ArrayAdapter adapter = new ArrayAdapter(this,
@@ -104,6 +105,7 @@ public class MainActivity extends BaseActivity {
                 .subscribe(aClass -> {
                     startActivity(new Intent(MainActivity.this, aClass));
                 });
+
     }
 
     @Override
@@ -123,6 +125,5 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
         toastor.showSingletonToast("Main");
     }
-
 
 }

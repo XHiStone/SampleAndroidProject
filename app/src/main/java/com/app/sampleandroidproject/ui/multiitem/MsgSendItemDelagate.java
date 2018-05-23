@@ -32,6 +32,7 @@ public class MsgSendItemDelagate implements ItemViewDelegate<ChatMessage> {
         holder.setImageResource(R.id.chat_send_icon, chatMessage.getIcon());
         holder.setOnClickListener(R.id.chat_send_icon,
                 v -> AppManagers.getToastor().showSingleLongToast("--send--"+position));
+
     }
 
 

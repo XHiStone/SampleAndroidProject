@@ -28,7 +28,8 @@ public class RetrofitDownLoadActivity extends BaseActivity {
     protected void startWork(Bundle savedInstanceState) {
         File outputFile = new File(Environment.getExternalStoragePublicDirectory
                 (Environment.DIRECTORY_DOWNLOADS), "file.apk");
-        htttpRequest(AppManagers.getHttpManager().downLoadApk("http://download.fir.im/v2/app/install/5818acbcca87a836f50014af?download_token=a01301d7f6f8f4957643c3fcfe5ba6ff", outputFile,listener, new Subscriber() {
+        htttpRequest(AppManagers.getHttpManager().downLoadApk("http://download.fir.im/v2/app/install/5818acbcca87a836f50014af?download_token=a01301d7f6f8f4957643c3fcfe5ba6ff",
+                outputFile,listener, new Subscriber() {
             @Override
             public void onCompleted() {
 

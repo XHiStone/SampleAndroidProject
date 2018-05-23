@@ -42,6 +42,7 @@ public interface HttpApi {
     @POST("auth/login")
     Observable<ModleBean<PagerBean<SysUserResponseVo>>> login(@QueryMap Map<String, String> keys,
                                                               @Body LoginRequest login);
+
     @GET("meeting/cityAndSpace.json")
     Observable<ModleBean<HttpResultCityAndSpace>> getCity();
 
@@ -55,4 +56,11 @@ public interface HttpApi {
     Observable<HomeTitleResult> getHomeTitle(
             @Url String url
     );
+
+    @GET
+    Observable<String> order(
+            @Url String url
+    );
+
+
 }

@@ -19,6 +19,7 @@ import org.greenrobot.greendao.rx.RxDao;
 import org.greenrobot.greendao.rx.RxQuery;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -109,7 +110,7 @@ public class RxDaoActivity extends BaseActivity {
         String noteText = editText.getText().toString();
         editText.setText("");
 
-        final DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
+        final DateFormat df = new SimpleDateFormat("HH:mm:ss/yyyy-MM-dd");
         String comment = "Added on " + df.format(new Date());
 
         Note note = new Note(null, noteText, comment, new Date(), NoteType.TEXT);

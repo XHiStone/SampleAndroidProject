@@ -11,6 +11,7 @@ public class ChatMessage {
     private String content;
     private String createDate;
     private boolean isComMeg;
+    private int type;
 
     public final static int RECIEVE_MSG = 0;
     public final static int SEND_MSG = 1;
@@ -22,6 +23,14 @@ public class ChatMessage {
         this.content = content;
         this.createDate = createDate;
         this.isComMeg = isComMeg;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public boolean isComMeg() {

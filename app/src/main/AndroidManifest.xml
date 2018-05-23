@@ -49,7 +49,8 @@
         <activity android:name=".ui.SVGActivity" />
         <activity android:name=".ui.multiitem.MultiItemActivity" />
         <activity android:name=".ui.swiperefresh.SwipeRefreshActivity" />
-        <activity android:name=".ui.RetrofitDownLoadActivity"/>
+        <activity android:name=".ui.RetrofitDownLoadActivity" />
+        <activity android:name=".ui.multiitem.MultiRecycleActivity"></activity>
     </application>
 
 </manifest>

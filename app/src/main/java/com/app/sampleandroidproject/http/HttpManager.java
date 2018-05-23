@@ -61,6 +61,4 @@ public class HttpManager extends BaseHttp {
         return httpRequest(listener).dispathDownLoad(downLoadApi.downLoadApk(url),file,observer);
     }
 
-
-
 }
